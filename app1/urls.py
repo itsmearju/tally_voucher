@@ -789,5 +789,9 @@ urlpatterns = [
 
     path('receipt_pcur_balance_change' , views.receipt_pcur_balance_change,name='receipt_pcur_balance_change'),      
 
- 
+
+    #------arjun------creditnote--voucher--
+    path('credit_note_voucher',views.credit_note_voucher,name='credit_note_voucher'),
+    path('save_credit_voucher',views.save_credit_voucher,name='save_credit_voucher'),
+    path('credit_note_voucher_page',views.credit_note_voucher_page,name='credit_note_voucher_page'),
      ]

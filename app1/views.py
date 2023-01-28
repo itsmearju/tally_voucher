@@ -11769,6 +11769,83 @@ def receipt_pcur_balance_change(request):
 
 
 
+#-----arjun----credit note voucher-----
 
-    
-    
+
+def credit_note_voucher(request):
+    if 't_id' in request.session:
+        if request.session.has_key('t_id'):
+            t_id = request.session['t_id']
+        else:
+            return redirect('/')
+
+        voucher = Voucher.objects.filter(voucher_type = 'Credit_Note')
+        context = {
+                    'voucher': voucher,
+
+                    }
+        return render(request,'list_credit_type.html',context)
+
+
+
+def credit_note_voucher_page(request):
+
+    if 't_id' in request.session:
+        if request.session.has_key('t_id'):
+            t_id = request.session['t_id']
+        else:
+            return redirect('/')
+
+        comp = Companies.objects.get(id = t_id)
+        
+        name = request.POST.get('ctype')
+     
+        vouch = Voucher.objects.filter(voucher_type = 'Credit_Note').get(voucher_name = name)
+
+        ledg_grp_all = tally_ledger.objects.all()
+        ledg_grp = tally_ledger.objects.filter(Q(under = 'Bank_Accounts')|Q(under = 'Cash_in_Hand'))
+     
+        v  = payment_voucher.objects.values('pid').last()
+        
+        counter = 1 if v is None else int(v['pid']) + 1
+
+        context = {
+                    'company' : comp ,
+                    'vouch' : vouch,
+                    'date1' : date.today(),
+                    'name':name,
+                    'ledg' : ledg_grp,
+                    'ledg_all' : ledg_grp_all,
+                    'v' : counter,
+                }
+        return render(request,'credit_voucher.html',context)
+
+
+def save_credit_voucher(request):
+    if 't_id' in request.session:
+        if request.session.has_key('t_id'):
+            t_id = request.session['t_id']
+        else:
+            return redirect('/')
+
+        comp = Companies.objects.get(id = t_id)
+        
+
+        name=request.POST['ctype']
+                       
+
+        vouch = Voucher.objects.filter(voucher_type = 'Credit_Note').get(voucher_name = name)
+
+        if request.method=='POST':
+
+            pid = request.POST['idlbl']
+            accnt = request.POST['acc']
+            date1 = request.POST.get('date1')
+            amount=request.POST.get('total')
+            nrt = request.POST.get('narrate')
+            account = tally_ledger.objects.values('name').get(id = accnt)
+            
+            print(amount)
+            payment_voucher(pid = pid,account = account['name'],date = date1 , amount = amount , narration = nrt ,voucher = vouch).save()
+
+        return render(request,'credit_voucher.html')
