@@ -11849,3 +11849,25 @@ def save_credit_voucher(request):
             payment_voucher(pid = pid,account = account['name'],date = date1 , amount = amount , narration = nrt ,voucher = vouch).save()
 
         return render(request,'credit_voucher.html')
+
+def ledger_create(request):
+    if 't_id' in request.session:
+        if request.session.has_key('t_id'):
+            t_id = request.session['t_id']
+        else:
+            return redirect('/')
+        tally = Companies.objects.filter(id=t_id)
+        # grp=tally_group.objects.all()
+        grp=tally_group.objects.filter(company=t_id)
+        return render(request,'ledger_creditnote.html',{'grp' : grp,'tally':tally})
+    return redirect('ledger_create') 
+
+def party_create(request):
+    if 't_id' in request.session:
+        if request.session.has_key('t_id'):
+            t_id = request.session['t_id']
+        else:
+            return redirect('/')
+        tally = Companies.objects.filter(id=t_id)
+    return render(request, 'party_details_credit.html',{'tally':tally})
+    

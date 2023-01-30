@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+        .hide{
+			display: none;
+    	}
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 17px;
+            transform: rotate(0deg);
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 150px;
+            right: 15px;
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 550px;
+        }
+        .content a:hover {
+            background-color: rgb(238, 167, 75);
+        }
+        .form-container {
+            max-width: 50px;
+            height: 500px;
+            padding: 10px;
+        }
+        .form-container1 {
+            max-width: 350px;
+            height: 600px;
+            padding: 2px; 
+        }
+        .bt{
+            text-align: end;
+        }
+        .btns_prnt{
+            width: 100%;
+            cursor:pointer;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+        }
+        .btns_prnt:hover{
+            background-color:#5bc9e4;
+            color: rgb(15, 14, 14);
+        } 
+        .ScrollStyle{
+            /* max-height: 200px; */
+            overflow-y: scroll;
+        }  
+    </style>
+
+    <div class="m-0">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6">Party Details</div>
+                    <div class="col-md-2">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="#" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Tracking No(s)</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="gname" class="form-control" id="a" required></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div> 
+                       
+                    </div>
+                    
+                    <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                        <div class="col-sm-12 m-0 p-4">
+                            
+                            <h5 class="text-center">Receipt Details</h5> <br>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Dispatch Doc No</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <input type="text"class="form-control">
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Dispatched Through</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <input type="text"class="form-control">
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Destination</label>
+                                </div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <input type="text"class="form-control">
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Carrier Name/Agent</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <input type="text"class="form-control">
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Bill of Lading/LR-RR No</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <input type="text"class="form-control">
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Date</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <input type="date"class="form-control">
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Motor Vehicle No</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <input type="text"class="form-control">
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                        </div>
+                    </div> <br>
+
+
+                    <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                        <div class="col-sm-12 m-0 p-4">
+                            
+                            <h5 class="text-center">Original Invoice Details</h5> <br>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Original Invoice No</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <input type="text"class="form-control">
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Date</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <input type="date"class="form-control">
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+
+                    <div class="enter w-100 py-4"><a href="#"><button class="btn btn-info w-15">NEXT</button></div>  </a>
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>
+
+   
+
+
+{% endblock %}

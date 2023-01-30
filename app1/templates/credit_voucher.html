@@ -212,7 +212,7 @@
                     <tbody style="border-color: rgb(112, 111, 111); " class = 'part'>
                         <div>
                         <tr>
-                            <th colspan="12" class="text-dark" style="border: none;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name of Item</th>
+                            <th colspan="13" class="text-dark" style="border: none;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name of Item</th>
                             <th colspan="2" class="text-right text-dark" style=" font: weight 8px;size: 15px; border: none;">Quantity&nbsp;</th>
                             <th colspan="2" class="text-right text-dark" style=" font: weight 8px;size: 15px; border: none;">Rate&nbsp;</th>
                             <th colspan="2" class="text-right text-dark" style=" font: weight 8px;size: 15px; border: none;">Amount&nbsp;</th>
@@ -295,8 +295,25 @@
         <div class="form-popup ScrollStyle" id="showForm" style="background-color: #213b52" >
             <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Ledger Account</h6>
             <button type="button" class="btn cancel close mt-0 fa fa-times fadeOut"></button>
-            <a href="vouchers" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+            <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
             <hr>
+                     
+            <div>
+                <table>
+                    <tr>
+                        <a href="{% url 'party_create' %}" class="btn bt btns_prnt" role="button">yellow</a>     
+                        
+                        
+                        {% for i in voucher %}
+                        
+                        <option class="btns_prnt">&nbsp;&nbsp;{{i.voucher_name }}</option>
+                        <input type="hidden" name="underhidden" value="{{i.id}}">
+
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+
             <div>
                 <table>
                     <tr>
