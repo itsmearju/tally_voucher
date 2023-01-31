@@ -33,7 +33,7 @@
     </div>
 </div>
    
-    <form class="p-2" style="background-color:rgba(0,0,0,.4);" method="post" action="#" autocomplete="off">
+    <form class="p-2" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'save_ledger' %}" autocomplete="off">
         {% csrf_token %}
         <div class="p-0">
             <div class="row container-fluid p-0 m-0" >

@@ -796,4 +796,8 @@ urlpatterns = [
     path('credit_note_voucher_page',views.credit_note_voucher_page,name='credit_note_voucher_page'),
     path('ledger_create',views.ledger_create,name='ledger_create'),
     path('party_create',views.party_create,name='party_create'),
-     ]
+    path('save_ledger',views.save_ledger,name='save_ledger'),
+    path('save_receipt_details',views.save_receipt_details,name='save_receipt_details'),
+    path('credit_party_list',views.credit_party_list,name='credit_party_list'),
+    path('voucher_page',views.voucher_page,name='voucher_page'),
+    ]

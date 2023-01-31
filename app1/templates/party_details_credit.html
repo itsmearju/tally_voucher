@@ -75,12 +75,12 @@
                     </div>
                 </div>
                 
-                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="#" autocomplete="off">
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'save_receipt_details' %}" autocomplete="off">
                     {% csrf_token %}
                     <div class="p-3">
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-4 m-0 p-0"> <label for="a">Tracking No(s)</label></div>
-                            <div class="col-sm-6 m-0 p-0"><input type="text" name="gname" class="form-control" id="a" required></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="Track" class="form-control" id="a" required></div>
                             <div class="col-sm-4 m-0 p-0"></div>
                         </div> 
                        
@@ -93,14 +93,14 @@
                             <div class="row container-fluid  p-2">
                                 <div class="col-sm-8 m-0 p-0"> <label for="c">Dispatch Doc No</label></div>
                                 <div class="col-sm-4 m-0 p-0">
-                                    <input type="text"class="form-control">
+                                    <input type="text"class="form-control"name="dis_doc">
                                 </div>
                                 <div class="col-sm-0 m-0 p-0"></div>
                             </div>
                             <div class="row container-fluid  p-2">
                                 <div class="col-sm-8 m-0 p-0"> <label for="c">Dispatched Through</label></div>
                                 <div class="col-sm-4 m-0 p-0">
-                                    <input type="text"class="form-control">
+                                    <input type="text"class="form-control"name="dis_t">
                                 </div>
                                 <div class="col-sm-0 m-0 p-0"></div>
                             </div>
@@ -108,35 +108,35 @@
                                 <div class="col-sm-8 m-0 p-0"> <label for="c">Destination</label>
                                 </div>
                                 <div class="col-sm-4 m-0 p-0">
-                                    <input type="text"class="form-control">
+                                    <input type="text"class="form-control"name="des">
                                 </div>
                                 <div class="col-sm-0 m-0 p-0"></div>
                             </div>
                             <div class="row container-fluid  p-2">
                                 <div class="col-sm-8 m-0 p-0"> <label for="c">Carrier Name/Agent</label></div>
                                 <div class="col-sm-4 m-0 p-0">
-                                    <input type="text"class="form-control">
+                                    <input type="text"class="form-control"name="carri">
                                 </div>
                                 <div class="col-sm-0 m-0 p-0"></div>
                             </div>
                             <div class="row container-fluid  p-2">
                                 <div class="col-sm-8 m-0 p-0"> <label for="c">Bill of Lading/LR-RR No</label></div>
                                 <div class="col-sm-4 m-0 p-0">
-                                    <input type="text"class="form-control">
+                                    <input type="text"class="form-control"name="bill">
                                 </div>
                                 <div class="col-sm-0 m-0 p-0"></div>
                             </div>
                             <div class="row container-fluid  p-2">
                                 <div class="col-sm-8 m-0 p-0"> <label for="c">Date</label></div>
                                 <div class="col-sm-4 m-0 p-0">
-                                    <input type="date"class="form-control">
+                                    <input type="date"class="form-control"name="dat_e">
                                 </div>
                                 <div class="col-sm-0 m-0 p-0"></div>
                             </div>
                             <div class="row container-fluid  p-2">
                                 <div class="col-sm-8 m-0 p-0"> <label for="c">Motor Vehicle No</label></div>
                                 <div class="col-sm-4 m-0 p-0">
-                                    <input type="text"class="form-control">
+                                    <input type="text"class="form-control"name="veh">
                                 </div>
                                 <div class="col-sm-0 m-0 p-0"></div>
                             </div>
@@ -151,14 +151,14 @@
                             <div class="row container-fluid  p-2">
                                 <div class="col-sm-8 m-0 p-0"> <label for="c">Original Invoice No</label></div>
                                 <div class="col-sm-4 m-0 p-0">
-                                    <input type="text"class="form-control">
+                                    <input type="text"class="form-control"name="invo">
                                 </div>
                                 <div class="col-sm-0 m-0 p-0"></div>
                             </div>
                             <div class="row container-fluid  p-2">
                                 <div class="col-sm-8 m-0 p-0"> <label for="c">Date</label></div>
                                 <div class="col-sm-4 m-0 p-0">
-                                    <input type="date"class="form-control">
+                                    <input type="date"class="form-control"name="dates">
                                 </div>
                                 <div class="col-sm-0 m-0 p-0"></div>
                             </div>
@@ -167,7 +167,7 @@
                     </div>
 
 
-                    <div class="enter w-100 py-4"><a href="#"><button class="btn btn-info w-15">NEXT</button></div>  </a>
+                    <div class="enter w-100 py-4"><button type="submit" class="btn btn-info w-15">SUBMIT</button></div> 
                 </form>
             </div>
         <div class="col-sm-5 m-0 p-0"></div>

@@ -1718,4 +1718,17 @@ class receipt_voucher(models.Model):
     amount = models.IntegerField(null= True)
     narration = models.CharField(max_length=255,null=True)
 
-        
+
+ #---arjun--creditnote---
+
+class party_details(models.Model):
+    track_no = models.CharField(max_length=255,null=True)
+    dis_doc = models.CharField(max_length=255,null=True)
+    dis_thr = models.CharField(max_length=255,null=True)
+    desti = models.CharField(max_length=255,null=True)
+    agent = models.CharField(max_length=255,null=True)
+    bill_no = models.CharField(max_length=255,null=True)
+    date = models.DateField(blank = True, null= True)
+    vehicle_no = models.CharField(max_length=255,null=True)
+    invoice_no = models.CharField(max_length=255,null=True)
+    date2 = models.DateField(blank = True, null= True)
