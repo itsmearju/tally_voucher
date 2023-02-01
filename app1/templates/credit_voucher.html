@@ -154,7 +154,7 @@
                         <span class="input-group">
                         <label>&nbsp;&nbsp;Party A/c name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</label>
 
-                         <select id="payacc"  name="acc"  class=" acc mb-4 form-control" style="width: 0;">
+                        <select id="payacc"  name="acc"  class=" acc mb-4 form-control" style="width: 0;">
                             <option id = "opt" >&nbsp;&nbsp;Select Account </option> 
                             {% for i in ledg %}
                             <option id = "opt" name ='opt' value="{{i.id}}" >&nbsp;&nbsp;{{i.name}}</option> 
@@ -162,12 +162,15 @@
                             
                             {% endfor %}
                         </select> 
+                       <!-- <input type="text"  id="payacc"class="form-control" name="acc"onclick="showform();" required>  -->
                         
                         
                     </span>
                     <span class="input-group">
+                        
                     <label>&nbsp;&nbsp;Current Balance :&nbsp;&nbsp;</label>
                     <label id ='curbalance'></label>
+                    
                    
                     </span>
                         </div>
@@ -178,15 +181,8 @@
                             <span class="input-group">
                             <label>&nbsp;&nbsp;Ledger Account&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</label>
     
-                             <select id="payacc"  name="acc"  class=" acc mb-4 form-control" style="width: 0;">
-                                <option id = "opt" >&nbsp;&nbsp;Select Account </option> 
-                                {% for i in ledg %}
-                                <option id = "opt" name ='opt' value="{{i.id}}" >&nbsp;&nbsp;{{i.name}}</option> 
-    
-                                
-                                {% endfor %}
-                            </select> 
-                            
+                              
+                            <input type="text"  id="payacc"class="form-control" name="acc">
                             
                         </span>
                         <span class="input-group">
@@ -226,7 +222,7 @@
                                             <span class="input-group">
                                         <select id="payacc1"  name="acc1" class=" rows acc payacc form-control m-4  p-0" onchange="changeCurbalance();" >
                                             <option id = "opt" >&nbsp;&nbsp;Name of Item</option> 
-                                            {% for i in ledg_all %}
+                                            {% for i in list %}
                                         <option id = "opt" value="{{i.id}}">&nbsp;&nbsp;{{i.name}}</option> 
                                         {% endfor %}
 
@@ -238,10 +234,12 @@
                                 </td>
                                 <td colspan="2" class="text-end mt-0" style="border: none; ">
                                     <input type="number" class = 'txt amnt pt-0' id= 'amnt1' name = 'amnt' oninput='calculateTotal();' onchange="createRow()"></td>
+
                                     <td colspan="2" class="text-end mt-0 " style="border: none; ">
-                                        <input type="number" class = 'txt amnt pt-0' id= 'amnt1' name = 'amnt' oninput='calculateTotal();' onchange="createRow()"></td>
+                                        <input type="number" class = 'txt amnt pt-0' id= 'amnt2' name = 'amnt' oninput='calculateTotal();' onchange="createRow()"></td>
+
                                 <td colspan="2" class="text-end mt-0 " style="border: none; ">
-                                    <input type="number" class = 'txt amnt pt-0' id= 'amnt1' name = 'amnt' oninput='calculateTotal();' onchange="createRow()"></td>
+                                    <input type="number" class = 'txt amnt pt-0' id= 'amnt3' name = 'amnt' oninput='calculateTotal();' onchange="createRow()"></td>
                                     
 
                             </tr>
@@ -252,7 +250,8 @@
                       <td colspan="12" style="border: none; ">
                        
                         <label class="text-dark">Narration : </label>
-                            <textarea name  = 'narrate' style="height: 50px; width:250px; background-color: white"></textarea></td>
+                            <textarea name  = 'narrate' style="height: 50px; width:250px; background-color: white"></textarea>
+                      </td>
                         {% else %}
                         <td colspan="12" style="border: none;" name  = 'narrate'></td> 
                         {% endif %}    
@@ -269,7 +268,7 @@
                         <!--<input type="text" class="txt " id ='total' name = 'total' readonly>
                         <label class="txt" id ='total' name = 'total' ></label>-->
                         <input  type="number" class="txt " id = 'total' name="total" readonly>
-                    </td>
+                      </td>
                       
                     </tfoot>
                     
@@ -292,45 +291,53 @@
     </div>
     <div class="col-lg-3">
 
-        <div class="form-popup ScrollStyle" id="showForm" style="background-color: #213b52" >
-            <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Ledger Account</h6>
-            <button type="button" class="btn cancel close mt-0 fa fa-times fadeOut"></button>
-            <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
-            <hr>
-                     
-            <div>
-                <table>
-                    <tr>
-                        <a href="{% url 'party_create' %}" class="btn bt btns_prnt" role="button">yellow</a>     
+        <div class="form-popup ScrollStyle" id="underForm" style="background-color: #213b52" >
+            <form action="#" class="form-container1" >
+                <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Ledger Accounts</h6>
+                <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+                <hr>
+                <div>
+                    <table>
                         
-                        
-                        {% for i in voucher %}
-                        
-                        <option class="btns_prnt">&nbsp;&nbsp;{{i.voucher_name }}</option>
-                        <input type="hidden" name="underhidden" value="{{i.id}}">
+                        <tr>
+                            
+                      
+                            {% for l in ledg %}
+                                <option  name ='opt' onclick="setvalue('{{l.name}}','{{l.id}}')" class="btns_prnt">&nbsp;&nbsp;{{l.name}}</option>
+                            {% endfor %}
+                        </tr>
+                    
+                    </table>
+                </div>
+                <input type="text" name="underhidden" hidden value="{{l.id}}">
+            </form>
+            <button type="button" class="btn cancel close" onclick="closeForm()">x</button>
+        </div>
 
-                        {% endfor %}
-                    </tr>
-                </table>
-            </div>
 
-            <div>
-                <table>
-                    <tr>
-                                                                        
-                        <!-- {% for i in voucher %}
-                        <option onclick="setvalue('{{i.voucher_name}}')" class="btns_prnt">&nbsp;&nbsp;{{i.voucher_name }}</option>
-                        <input type="hidden" name="underhidden" value="{{i.id}}">
-
-                        {% endfor %} -->
-                    </tr>
-                </table>
-            </div>
-    </div>
-
+        
 
     </div>
 </div>
+
+
+<script>
+    function closeForm() {
+        document.getElementById("underForm").style.display = "none";
+    }
+    function showform(){
+        document.getElementById('underForm').style.display= "block";
+    }
+    function setPrimary(){
+        document.getElementById('under').value= 'Names';
+        document.getElementById('underForm').style.visibility= "block";
+    }
+    function setvalue(under,underId){
+        document.getElementById('payacc').value= under;
+        document.getElementById('underForm').style.visibility= "block";
+        document.getElementsByName('underhidden').value= underId;
+    }
+</script>
 
 
 
@@ -456,7 +463,7 @@ function createRow(){
 
    
     id++;
-    $(".part").append('<tr style="border: none;"><td colspan="12" style="border: none;" class="mt-4"><select id="payacc'+id+'" name="acc1" class=" rows acc form-control m-2 p-0" onchange="changeCurbalance();"><option id = "opt" >&nbsp;&nbsp;Select Particular </option> {% for i in ledg_all %}<option id = "opt" value="{{i.id}}">&nbsp;&nbsp;{{i.name}}</option>{% endfor %}</select> <label class = "blnc1" style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label><label class = "blnc1" id="blnc'+id+'" class="p-0 mt-0 txt" style="color: #000;"></label></td><td colspan="2" class="text-right mt-0" style="border: none; "><input type="number" class = "txt amnt" id= "amnt'+id+'" oninput="calculateTotal();" onchange="createRow()" name = "amnt" ></td></tr>')
+    $(".part").append('<tr style="border: none;"><td colspan="12" style="border: none;" class="mt-4"><select id="payacc'+id+'" name="acc1" class=" rows acc form-control m-2 p-0" onchange="changeCurbalance();"><option id = "opt" >&nbsp;&nbsp;Name of Item </option> {% for i in list %}<option id = "opt" value="{{i.id}}">&nbsp;&nbsp;{{i.name}}</option>{% endfor %}</select> <label class = "blnc1" style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label><label class = "blnc1" id="blnc'+id+'" class="p-0 mt-0 txt" style="color: #000;"></label></td><td colspan="2" class="text-right mt-0" style="border: none; "><input type="number" class = "txt amnt" id= "amnt'+id+'" oninput="calculateTotal();" onchange="createRow()" name = "amnt" ></td></tr>')
 
        
 }

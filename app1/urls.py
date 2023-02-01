@@ -800,4 +800,7 @@ urlpatterns = [
     path('save_receipt_details',views.save_receipt_details,name='save_receipt_details'),
     path('credit_party_list',views.credit_party_list,name='credit_party_list'),
     path('voucher_page',views.voucher_page,name='voucher_page'),
+    path('fetch_party',views.fetch_party,name='fetch_party'),
+    path('new_party_create',views.new_party_create,name='new_party_create'),
+    path('save_buyer',views.save_buyer,name='save_buyer'),
     ]

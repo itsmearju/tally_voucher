@@ -1721,6 +1721,7 @@ class receipt_voucher(models.Model):
 
  #---arjun--creditnote---
 
+
 class party_details(models.Model):
     track_no = models.CharField(max_length=255,null=True)
     dis_doc = models.CharField(max_length=255,null=True)
@@ -1732,3 +1733,23 @@ class party_details(models.Model):
     vehicle_no = models.CharField(max_length=255,null=True)
     invoice_no = models.CharField(max_length=255,null=True)
     date2 = models.DateField(blank = True, null= True)
+
+class new_buyer(models.Model):
+    new = models.CharField(max_length=255,null=True)
+    bill_to = models.CharField(max_length=255,null=True)
+    mail = models.CharField(max_length=255,null=True)
+    addr = models.CharField(max_length=255,null=True)
+    stat = models.CharField(max_length=255,null=True)
+    contr = models.CharField(max_length=255,null=True) 
+
+class credit_voucher(models.Model):
+    voucher_de = models.ForeignKey(Voucher,on_delete=models.CASCADE,null=True,blank=True)
+    vou_id = models.IntegerField(null=True)
+    party_nm = models.CharField(max_length= 255, null=True)
+    date = models.DateField(blank = True, null= True)
+    led_account = models.CharField(max_length= 255, null=True)
+    item_nm = models.CharField(max_length= 255, null=True)
+    quant = models.IntegerField(null= True)
+    rate = models.IntegerField(null= True)
+    amount = models.IntegerField(null= True)
+    narration = models.CharField(max_length=255,null=True)

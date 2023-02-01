@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 
-                <form class="p-3" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'stock_group' %}" autocomplete="off">
+                <form class="p-3" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'save_buyer' %}" autocomplete="off">
                     {% csrf_token %}
                     <div class="p-3">
                         <div class="row container-fluid  p-2 m-0">
@@ -81,7 +81,7 @@
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-2 m-0 p-0"></div>
                             <div class="col-sm-3 m-0 p-0"> <label for="b">Mailing Name</label></div>
-                            <div class="col-sm-5 m-0 p-0"><input type="text" class="form-control" name="m_name"onclick="closeForm()"></div> 
+                            <div class="col-sm-5 m-0 p-0"><input type="text" id="under"class="form-control" name="m_name"onclick="closeForm()"></div> 
                         </div>
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-2 m-0 p-0"></div>
@@ -119,14 +119,15 @@
     <div class="form-popup" id="underForm" style="background-color: #213b52" >
         <form action="" class="form-container1" >
             <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Ledger Accounts</h6>
-            <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+            <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a> 
+            <a href="{% url 'new_party_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">New Party</a>  
             <hr>
             <div>
                 <table>
                     <tr>
-                        <option onclick="setPrimary()" class="btns_prnt">&nbsp;&nbsp;Names</option>
+                        
                   
-                        {% for l in und %}
+                        {% for l in ledg_grp %}
                             <option onclick="setvalue('{{l.name}}','{{l.id}}')" class="btns_prnt">&nbsp;&nbsp;{{l.name}}</option>
                         {% endfor %}
                     </tr>
