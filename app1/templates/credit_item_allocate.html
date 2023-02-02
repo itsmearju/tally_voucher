@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hide{
+            display: none;
+        }
+        .modal-body {
+            color: #fff;
+            background-color: #213b52;
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+        .modal-content{
+            margin-top: 250px;
+            background-color: #213b52;
+        }
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 17px;
+            transform: rotate(0deg);
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 150px;
+            right: 15px;
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 550px;
+        }
+        .btns_prnt{
+            color: #fff;
+            width: 100%;
+            cursor: pointer;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+        }
+        .btns_prnt:hover{
+            background-color:#5bc9e4;
+            color: rgb(15, 14, 14);
+        }
+        .bt{
+            text-align: end;
+        }
+    </style>
+    <!-- <script src="{% static 'js/vouchers.js' %}"></script> -->
+    
+    <div class=" m-2 ">
+      <div class="row m-0 p-0">
+        <div class="col-sm-9">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6"><h6>Stock Item Allocations</h6></div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                    {{i.name}}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="#" autocomplete="off">
+            {% csrf_token %}
+            <div class="p-0">
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-6 m-0 p-0"> <h5>Item Allocations For :</h5></div>
+                    
+                    <div class="col-sm-6 m-0 p-0"></div>
+                </div>
+            </div> <hr>
+            <div class="row mx-auto text-center">
+                <div class="col-sm-3">
+                    <h5>Godown</h5>
+                </div>
+                <div class="col-sm-3">
+                    <h5>Quantity</h5>
+                </div>
+            
+                <div class="col-sm-3">
+                    <h5>Rate</h5><span>Per</span>
+                </div>
+                <div class="col-sm-3">
+                    <h5>Amount</h5>
+                </div>
+            </div>
+            
+
+            <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                <div class="col-sm-3 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                   
+                    <div class="row container-fluid  p-0">
+                        <div class="col-sm-6 m-0 p-0"></div>
+                        <div class="col-sm-6 m-0 p-0"></div>
+                    </div>
+
+                    <div class="row container-fluid  p-2" id="">
+                        <div class="col-sm-12 m-0 p-0"><input type="text" name="godow" class="form-control"  id="under"onclick="showform();"></div>
+                    </div>
+
+                   
+                </div>
+                <div class="col-sm-3 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                   
+                    <div class="row container-fluid  p-2 mx-1">
+                        <div class="col-sm-12 m-0 p-0">
+                            <div class="row container-fluid  p-0" >
+                                <div class="col-sm-12 m-0 p-0"><input type="text" name="quantity" class="form-control" id="calc1"required></div>
+                            </div>
+                        </div>
+                    </div> 
+                       
+                </div>
+                <div class="col-sm-3 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                   
+                    <div class="row container-fluid  p-2 mx-1">
+                        <div class="col-sm-12 m-0 p-0">
+                            <div class="row container-fluid  p-0" >
+                                <div class="col-sm-12 m-0 p-0"><input type="text" name="rate" class="form-control" id="calc2"required></div>
+                            </div>
+                        </div>
+                    </div> 
+                       
+                </div>
+                <div class="col-sm-3 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                   
+                    <div class="row container-fluid  p-2 mx-1">
+                        <div class="col-sm-12 m-0 p-0">
+                            <div class="row container-fluid  p-0" >
+                                <div class="col-sm-12 m-0 p-0"><input type="text" name="total" value='' class="form-control" id="calc3"required></div>
+                            </div>
+                        </div>
+                    </div> 
+                       
+                </div>
+            </div>
+            <div class="enter w-100 py-4"><button type="submit" class="btn btn-info w-15">CREATE</button></div>    
+        </form>    
+       
+      </div>
+    </div>
+        <div class="form-popup" id="underForm" style="background-color: #213b52" >
+            <form action="" class="form-container1" >
+                <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Godowns</h6>
+                <a href="{% url 'godown_creation' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create godown</a>   
+                <hr>
+                <div>
+                    <table>
+                        <tr>
+                            
+                      
+                            {% for l in gd %}
+                                <option onclick="setvalue('{{l.name}}','{{l.id}}')" class="btns_prnt">&nbsp;&nbsp;{{l.name}}</option>
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+                <input type="text" name="underhidden" hidden value="{{l.id}}">
+            </form>
+            <button type="button" class="btn cancel close" onclick="closeForm()">x</button>
+        </div>
+        
+        
+
+    
+    
+
+    <script>
+        function closeForm() {
+            document.getElementById("underForm").style.display = "none";
+        }
+        function showform(){
+            document.getElementById('underForm').style.display= "block";
+        }
+        function setPrimary(){
+            document.getElementById('under').value= 'Names';
+            document.getElementById('underForm').style.visibility= "block";
+        }
+        function setvalue(under,underId){
+            document.getElementById('under').value= under;
+            document.getElementById('underForm').style.visibility= "block";
+            document.getElementsByName('underhidden').value= underId;
+        }
+    </script>
+
+<script>
+    let x = document.getElementById("calc1").innerHTML;
+    let y = document.getElementById("calc2").innerHTML;
+    let z = x * y;
+    document.getElementById("calc3").innerHTML = z;
+ </script>
+    
+{% endblock %}

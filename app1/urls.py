@@ -803,4 +803,5 @@ urlpatterns = [
     path('fetch_party',views.fetch_party,name='fetch_party'),
     path('new_party_create',views.new_party_create,name='new_party_create'),
     path('save_buyer',views.save_buyer,name='save_buyer'),
+    path('allocation_page',views.allocation_page,name='allocation_page'),
     ]

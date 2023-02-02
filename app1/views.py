@@ -11855,7 +11855,7 @@ def save_credit_voucher(request):
             account = tally_ledger.objects.values('name').get(id = accnt)
             
             print(amount)
-            payment_voucher(pid = pid,account = account['name'],date = date1 , amount = amount , narration = nrt ,voucher = vouch).save()
+            credit_voucher(pid = pid,account = account['name'],date = date1 , amount = amount , narration = nrt ,voucher = vouch).save()
 
         return render(request,'credit_voucher.html')
 
@@ -12066,6 +12066,25 @@ def credit_party_list(request):
         }
     return render(request,'credit_party.html',context)
 
+def save_buyer(request):
+    if request.method=='POST':
+        bill=request.POST['buy_name']
+        mailing=request.POST['m_name']
+        addrre=request.POST['address']
+        s_ta=request.POST['state']
+        c_ountr=request.POST['country']
+        
+        data=new_buyer( bill_to=bill,
+                              mail=mailing,
+                              addr=addrre,
+                              stat=s_ta,
+                              contr=c_ountr,
+                              )
+        data.save()
+        return redirect('credit_note_voucher_page')
+    else:
+        return redirect('/')
+
 
 def voucher_page(request):
     if 't_id' in request.session:
@@ -12090,21 +12109,13 @@ def new_party_create(request):
             return redirect('credit_party_list')
     return render(request,'credit_new_party.html',{'tally':tally})
 
-def save_buyer(request):
-    if request.method=='POST':
-        bill=request.POST['buy_name']
-        mailing=request.POST['m_name']
-        addrre=request.POST['address']
-        s_ta=request.POST['state']
-        c_ountr=request.POST['country']
-        
-        data=new_buyer( bill_to=bill,
-                              mail=mailing,
-                              addr=addrre,
-                              stat=s_ta,
-                              contr=c_ountr,
-                              )
-        data.save()
-        return redirect('credit_party_list')
-    else:
-        return redirect('/')
+def allocation_page(request):
+    if 't_id' in request.session:
+        if request.session.has_key('t_id'):
+            t_id = request.session['t_id']
+        else:
+            return redirect('/')
+        tally = Companies.objects.filter(id=t_id)
+        gd=CreateGodown.objects.all()
+    return render(request,'credit_item_allocate.html',{'gd':gd,'tally':tally})
+
