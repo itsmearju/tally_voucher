@@ -23,19 +23,14 @@
             background-color: #213b52;
         }
     </style>
-    <!-- <script src="{% static 'js/vouchers.js' %}"></script> -->
+    
     
     <div class="m-2">
         <div class="row bg-info text-light p-2 m-0">
-            <div class="col-md-6"><h6>Voucher Type Creation (Secondary)</h6></div>
-            <div class="col-md-6">
-                {% for i in tally %}
-                    {{i.name}}
-                {% endfor %}
-            </div>
+            <div class="col-md-6"><h6>Voucher Type Creation (secondary)</h6></div>
         </div>
         
-        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="#" autocomplete="off">
+        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'Statistics_Voucher_Type_Creation' %}" autocomplete="off">
             {% csrf_token %}
             <div class="p-3">
                 <div class="row container-fluid  p-2 m-0">
@@ -63,6 +58,12 @@
                         <div class="col-sm-6 m-0 p-0">
                             <select name="vouch_type" id="voucher_type" class="form-control" onchange="showVoucherType()" required >
                                 <option value="Abr"></option>
+                                {% for i in data %}
+                                <option value="{{ i.voucher_name }}">{{ i.voucher_name }}</option>
+                                {% endfor %}
+                                <!-- {% for i in vchr_new %}
+                                <option value="{{ i.voucher_name }}">{{ i.voucher_name }}</option>
+                                {% endfor %} -->
                                 <option value="Attendance">Attendance</option>  
                                 <option value="Contra">Contra</option> 
                                 <option value="Credit_Note">Credit Note</option>
@@ -132,6 +133,7 @@
                             </div>
                         </div>
                     </div>
+                    <hr>
                     <div class="row container-fluid p-2">
                         <div class="col-sm-6 m-0 p-0"> <label for="f">Method of voucher numbering</label></div>
                         <div class="col-sm-6 m-0 p-0">
@@ -164,13 +166,13 @@
                             </select>
                         </div>
                     </div>     
-
+                    <hr>
                     <div class="row container-fluid  p-2">
                         <div class="col-sm-6 m-0 p-0"> <label for="g">Use effective dates  for vouchers</label></div>
                         <div class="col-sm-6 m-0 p-0">
                             <select name="use_EDV" id="g" class="form-control">
-                                <option value="No">No</option>
-                                <option value="Yes">Yes</option>   
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>   
                             </select>
                         </div>
                     </div>
@@ -178,8 +180,8 @@
                         <div class="col-sm-6 m-0 p-0"> <label for="h">Allow zero valued transactions</label></div>
                         <div class="col-sm-6 m-0 p-0">
                             <select name="zero_val" id="" class="form-control">
-                                <option value="No">No</option>
-                                <option value="Yes">Yes</option>   
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>   
                             </select>
                         </div>
                     </div>
@@ -188,8 +190,8 @@
                         <div class="col-sm-6 m-0 p-0"> <label for="i">Make voucher type as 'Optional' by default</label></div>
                         <div class="col-sm-6 m-0 p-0">
                             <select name="mVoptional_defualt" id="i" class="form-control">
-                                <option value="No">No</option>
-                                <option value="Yes">Yes</option>
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
                             </select>
                         </div>
                     </div>
@@ -198,8 +200,8 @@
                         <div class="col-sm-6 m-0 p-0"> <label for="">Allow narration in voucher</label></div>
                         <div class="col-sm-6 m-0 p-0">
                             <select name="allow_nar" id="j" class="form-control">
-                                <option value="Yes">Yes</option> 
-                                <option value="No">No</option>   
+                                <option value="yes">Yes</option> 
+                                <option value="no">No</option>   
                             </select>
                         </div>
                     </div>
@@ -208,8 +210,8 @@
                         <div class="col-sm-6 m-0 p-0"> <label for="k">Provide narration for each leadger voucher</label></div>
                         <div class="col-sm-6 m-0 p-0">
                             <select name="provide_L" id="k" class="form-control">
-                                <option value="YNo">No</option>
-                                <option value="Yes">Yes</option> 
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option> 
                             </select>
                         </div>
                     </div><br>
@@ -352,7 +354,7 @@
             console.log(a);
             if( a== "Yes"){
                 console.log(a);
-                window.location.href="{% url 'vouch_advance' %}"
+                window.location.href="{% url 'vouch_advance' %"
             }
         }
 

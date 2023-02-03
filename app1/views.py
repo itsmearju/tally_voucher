@@ -11771,23 +11771,6 @@ def receipt_pcur_balance_change(request):
 
 #-----arjun----credit note voucher-----
 
-
-def credit_note_voucher(request):
-    if 't_id' in request.session:
-        if request.session.has_key('t_id'):
-            t_id = request.session['t_id']
-        else:
-            return redirect('/')
-
-        voucher = Voucher.objects.filter(voucher_type = 'Credit_Note')
-        context = {
-                    'voucher': voucher,
-
-                    }
-        return render(request,'list_credit_type.html',context)
-
-
-
 def credit_note_voucher_page(request):
 
     if 't_id' in request.session:
@@ -11802,9 +11785,6 @@ def credit_note_voucher_page(request):
         
         name = request.POST.get('ctype')
      
-        vouch = Voucher.objects.filter(voucher_type = 'Credit_Note').get(voucher_name = name)
-
-        
         ledg_grp = tally_ledger.objects.filter(Q(under = 'Bank_Accounts')|Q(under = 'Cash_in_Hand')|Q(under = 'Branch_Divisions')|Q(under = 'Sundry_Creditors')|Q(under = 'sundry_Debtors'))
      
         vou  = credit_voucher.objects.values('vou_id').last()
@@ -11814,7 +11794,6 @@ def credit_note_voucher_page(request):
         context = {
                     'company' : comp ,
                     'list':item_list,
-                    'vouch' : vouch,
                     'date1' : date.today(),
                     'name':name,
                     'ledg' : ledg_grp,
@@ -12093,7 +12072,8 @@ def voucher_page(request):
         else:
             return redirect('/')
         tally = Companies.objects.filter(id=t_id)
-    return render(request,'credit_voucher_type.html',{'tally':tally})
+        data=Voucher.objects.all()
+    return render(request,'credit_voucher_type.html',{'tally':tally,'data':data})
 
 def new_party_create(request):
     if 't_id' in request.session:
@@ -12119,3 +12099,11 @@ def allocation_page(request):
         gd=CreateGodown.objects.all()
     return render(request,'credit_item_allocate.html',{'gd':gd,'tally':tally})
 
+def bill_details(request):
+    if 't_id' in request.session:
+        if request.session.has_key('t_id'):
+            t_id = request.session['t_id']
+        else:
+            return redirect('/')
+        tally = Companies.objects.filter(id=t_id)
+    return render(request,'credit_bill_details.html',{'tally':tally})

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hide{
+            display: none;
+        }
+        
+        
+    </style>
+    
+    <div class=" m-2 ">
+      <div class="row m-0 p-0">
+        <div class="col-sm-12">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6"><h6>Bill-Wise Details</h6></div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                    {{i.name}}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="#" autocomplete="off">
+            {% csrf_token %}
+            <div class="p-0">
+                <div class="row   p-2 m-0">
+                    <div class="col-sm-6 m-0 p-0"> <h5>Bill-Wise Details For : </h5></div>
+                    
+                    <div class="col-sm-6 m-0 p-0"><h5>Upto : </h5></div>
+                </div>
+            </div> <hr>
+            <div class="row mx-auto text-center">
+                <div class="col-sm-3">
+                    <h5>Type of Ref.</h5>
+                </div>
+                <div class="col-sm-3">
+                    <h5>Name</h5>
+                </div>
+            
+                <div class="col-sm-3">
+                    <h5>Due Date/ Credit Days</h5>
+                </div>
+                <div class="col-sm-3">
+                    <h5>Amount</h5><span>Dr/Cr</span>
+                </div>
+            </div>
+            
+
+            <div class="row   p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                <div class="col-sm-3 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                   
+                    <div class="row container-fluid  p-0">
+                        <div class="col-sm-6 m-0 p-0"></div>
+                        <div class="col-sm-6 m-0 p-0"></div>
+                    </div>
+
+                    <div class="row  p-2" id="">
+                        <div class="col-sm-12 m-0 p-0">
+                            <select class="form-control">
+                                <option class="form-control">On Account</option>
+                            </select>
+                        </div>
+                    </div>
+
+                   
+                </div>
+                <div class="col-sm-3 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                   
+                    <div class="row   p-2 mx-1">
+                        <div class="col-sm-12 m-0 p-0">
+                            <div class="row container-fluid  p-0" >
+                                <div class="col-sm-12 m-0 p-0"><input type="text" name="quantity" class="form-control" id="calc1"required></div>
+                            </div>
+                        </div>
+                    </div> 
+                       
+                </div>
+                <div class="col-sm-3 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                   
+                    <div class="row container-fluid  p-2 mx-1">
+                        <div class="col-sm-12 m-0 p-0">
+                            <div class="row container-fluid  p-0" >
+                                <div class="col-sm-12 m-0 p-0"><input type="text" name="rate" class="form-control" id="calc2"required></div>
+                            </div>
+                        </div>
+                    </div> 
+                       
+                </div>
+                <div class="col-sm-3 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                   
+                    <div class="row container-fluid  p-2 mx-1">
+                        <div class="col-sm-12 m-0 p-0">
+                            <div class="row container-fluid  p-0" >
+                                <div class="col-sm-12 m-0 p-0"><input type="text" name="total" value='' class="form-control" id="calc3"required></div>
+                            </div>
+                        </div>
+                    </div> 
+                       
+                </div>
+            </div>
+            <div class="enter w-100 py-4"><button type="submit" class="btn btn-info w-15">CREATE</button></div>    
+        </form>    
+       
+      </div>
+    </div>
+
+    
+    
+
+    <script>
+        function closeForm() {
+            document.getElementById("underForm").style.display = "none";
+        }
+        function showform(){
+            document.getElementById('underForm').style.display= "block";
+        }
+        function setPrimary(){
+            document.getElementById('under').value= 'Names';
+            document.getElementById('underForm').style.visibility= "block";
+        }
+        function setvalue(under,underId){
+            document.getElementById('under').value= under;
+            document.getElementById('underForm').style.visibility= "block";
+            document.getElementsByName('underhidden').value= underId;
+        }
+    </script>
+
+
+    
+{% endblock %}

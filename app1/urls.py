@@ -791,7 +791,6 @@ urlpatterns = [
 
 
     #------arjun------creditnote--voucher--
-    path('credit_note_voucher',views.credit_note_voucher,name='credit_note_voucher'),
     path('save_credit_voucher',views.save_credit_voucher,name='save_credit_voucher'),
     path('credit_note_voucher_page',views.credit_note_voucher_page,name='credit_note_voucher_page'),
     path('ledger_create',views.ledger_create,name='ledger_create'),
@@ -804,4 +803,5 @@ urlpatterns = [
     path('new_party_create',views.new_party_create,name='new_party_create'),
     path('save_buyer',views.save_buyer,name='save_buyer'),
     path('allocation_page',views.allocation_page,name='allocation_page'),
+    path('bill_details',views.bill_details,name='bill_details'),
     ]
