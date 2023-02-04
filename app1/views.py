@@ -11782,8 +11782,6 @@ def credit_note_voucher_page(request):
         comp = Companies.objects.get(id = t_id)
 
         item_list = stock_itemcreation.objects.all()
-        
-        name = request.POST.get('ctype')
      
         ledg_grp = tally_ledger.objects.filter(Q(under = 'Bank_Accounts')|Q(under = 'Cash_in_Hand')|Q(under = 'Branch_Divisions')|Q(under = 'Sundry_Creditors')|Q(under = 'sundry_Debtors'))
      
@@ -11795,19 +11793,11 @@ def credit_note_voucher_page(request):
                     'company' : comp ,
                     'list':item_list,
                     'date1' : date.today(),
-                    'name':name,
                     'ledg' : ledg_grp,
                     'v' : counter,
                 }
         return render(request,'credit_voucher.html',context)
 
-
-def fetch_party(request):
-    if request.method=='POST':
-        party = request.POST['payacc']
-        bal = tally_ledger.objects.get(opening_blnc=party.id)
-        return redirect('party_create')
-    return render(request,'credit_voucher.html',{'bal':bal})
 
 def save_credit_voucher(request):
     if 't_id' in request.session:
@@ -11816,13 +11806,9 @@ def save_credit_voucher(request):
         else:
             return redirect('/')
 
-        comp = Companies.objects.get(id = t_id)
-        
+        comp = Companies.objects.get(id = t_id)                
 
-        name=request.POST['ctype']
-                       
-
-        vouch = Voucher.objects.filter(voucher_type = 'Credit_Note').get(voucher_name = name)
+        vouch = Voucher.objects.filter(voucher_type = 'Credit_Note')
 
         if request.method=='POST':
 

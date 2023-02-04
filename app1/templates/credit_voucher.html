@@ -463,7 +463,7 @@ function createRow(){
 
    
     id++;
-    $(".part").append('<tr style="border: none;"><td colspan="12" style="border: none;" class="mt-4"><select id="payacc'+id+'" name="acc1" class=" rows acc form-control m-2 p-0" onchange="changeCurbalance();"><option id = "opt" >&nbsp;&nbsp;Name of Item </option> {% for i in list %}<option id = "opt" value="{{i.id}}">&nbsp;&nbsp;{{i.name}}</option>{% endfor %}</select> <label class = "blnc1" style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label><label class = "blnc1" id="blnc'+id+'" class="p-0 mt-0 txt" style="color: #000;"></label></td><td colspan="2" class="text-right mt-0" style="border: none; "><input type="number" class = "txt amnt" id= "amnt'+id+'" oninput="calculateTotal();" onchange="createRow()" name = "amnt" ></td></tr>')
+    $(".part").append('<tr style="border: none;"><td colspan="12" style="border: none;" class="mt-4"><select id="payacc'+id+'" name="acc1" class=" rows acc form-control m-2 p-0"><option id = "opt" class="form-control" >&nbsp;&nbsp;Name of Item </option> {% for i in list %}<option id = "opt" value="{{i.id}}">&nbsp;&nbsp;{{i.name}}</option>{% endfor %}</select><label class = "blnc1" id="blnc'+id+'" class="p-0 mt-0 txt " style="color: #000;"></label></td><td colspan="2" class="text-right mt-0" style="border: none; "><input type="number" class = "txt amnt" id= "amnt'+id+'" oninput="calculateTotal();" onchange="createRow()" name = "amnt" ><input type="number" class = "txt amnt" id= "amnt2'+id+'" name = "amnt" ><input type="number" class = "txt amnt" id= "amnt3'+id+'"  name = "amnt" ></td></tr>')
 
        
 }
