@@ -11977,7 +11977,7 @@ def save_ledger(request):
     return redirect('/')
 
 
-def party_create(request):
+def party_create(request, option):
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
             t_id = request.session['t_id']
@@ -12093,3 +12093,5 @@ def bill_details(request):
             return redirect('/')
         tally = Companies.objects.filter(id=t_id)
     return render(request,'credit_bill_details.html',{'tally':tally})
+
+
