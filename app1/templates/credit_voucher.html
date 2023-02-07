@@ -111,7 +111,7 @@
        
 </style>
 <div class="row">
-    <div class="col-lg-9">
+    <div class="col-lg-12">
 <div class="container-fluid" >
     <div class="main-panel" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
         <div class="content-wrapper" >
@@ -154,16 +154,15 @@
                         <span class="input-group">
                         <label>&nbsp;&nbsp;Party A/c name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</label>
 
-                       
-                            <select id="payacc"  name="acc"  class="mb-4 form-control" style="width: 0;">
+                        
+                           
+                            <select id="payacc"  name="acc"  class="mb-4 form-control" style="width: 0;"onclick="closeForm()">
                                 <option id = "opt">&nbsp;&nbsp;List of Ledger Accounts </option> 
                                 {% for i in ledg %}
                                 <option id = "opt" name ='opt' value="{{i.id}}" >&nbsp;&nbsp;{{i.name}}</option> 
-    
-                                
                                 {% endfor %}
-                               
                             </select> 
+                           
                             
                        
                        <!-- <input type="text"  id="payacc"class="form-control" name="acc"onclick="showform();" required>  -->
@@ -175,7 +174,6 @@
                     <label>&nbsp;&nbsp;Current Balance :&nbsp;&nbsp;</label>
                     <label id ='curbalance'></label>
                     
-                   
                     </span>
                         </div>
 
@@ -186,7 +184,7 @@
                             <label>&nbsp;&nbsp;Ledger Account&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</label>
     
                               
-                            <input type="text"  id="payacc1"class="form-control" >
+                            <input type="text"  id="payacc1"class="form-control" onclick="showform()" required>
                             
                         </span>
                         <span class="input-group">
@@ -202,6 +200,9 @@
                     <th colspan="10" class="text-right mt-0" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);
                             border-left:none ; color: #000;">                           
                       
+                      <div><h5 class="text-dark">Ledger Account Creation</h5>
+                        <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn btn-info text-black " role="button">Create</a> </div>
+
                       <div >{{date1 | date:'d-M-Y'}}</div>
                       <input type="hidden" name = 'date1' value="{{date1|date:'Y-m-d'}}">
                       <div>{{date1 | date:'l'}}</div>
@@ -224,7 +225,7 @@
                                 <td colspan="12" style="border: none;" class="mt-2">
                                     <div class="my-1">
                                             <span class="input-group">
-                                        <select id="payacc1"  name="acc1" class=" rows acc payacc form-control m-4  p-0" onchange="changeCurbalance();" >
+                                        <select id="payacc1"  name="acc1" class=" rows acc payacc form-control m-4  p-0" onchange="changeCurbalance();" onclick="closeForm()">
                                             <option id = "opt" >&nbsp;&nbsp;Name of Item</option> 
                                             {% for i in list %}
                                         <option id = "opt" value="{{i.id}}">&nbsp;&nbsp;{{i.name}}</option> 
@@ -237,13 +238,13 @@
                                     
                                 </td>
                                 <td colspan="2" class="text-end mt-0" style="border: none; ">
-                                    <input type="number" class = 'txt amnt pt-0' id= 'amnt1' name = 'amnt' oninput='calculateTotal();' onchange="createRow()"></td>
+                                    <input type="number" class = 'txt amnt pt-0' id= 'quantity' name = 'quant'></td>
 
                                     <td colspan="2" class="text-end mt-0 " style="border: none; ">
-                                        <input type="number" class = 'txt amnt pt-0' id= 'amnt2' name = 'amnt' oninput='calculateTotal();' onchange="createRow()"></td>
+                                        <input type="number" class = 'txt amnt pt-0' id= 'rte' name = 'rate'  onchange="createRow()"></td>
 
                                 <td colspan="2" class="text-end mt-0 " style="border: none; ">
-                                    <input type="number" class = 'txt amnt pt-0' id= 'amnt3' name = 'amnt' oninput='calculateTotal();' onchange="createRow()"></td>
+                                    <input type="number" class = 'txt amnt pt-0' id= 'amnt1' name = 'amnt' oninput='calculateTotal()'></td>
                                     
 
                             </tr>
@@ -295,7 +296,7 @@
     </div>
     <div class="col-lg-3">
 
-        <div class="form-popup ScrollStyle" id="underForm" style="background-color: #213b52" >
+        <div class="form-popup " id="underForm" style="background-color: #213b52" >
             <form action="#" class="form-container1" >
                 <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Ledger Accounts</h6>
                 <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
@@ -317,7 +318,8 @@
             </form>
             <button type="button" class="btn cancel close" onclick="closeForm()">x</button>
         </div>
-
+        
+       
 
         
 
@@ -326,21 +328,18 @@
 
 
 <script>
-    function closeForm() {
-        document.getElementById("underForm").style.display = "none";
-    }
-    function showform(){
-        document.getElementById('underForm').style.display= "block";
-    }
-    function setPrimary(){
-        document.getElementById('under').value= 'Names';
-        document.getElementById('underForm').style.visibility= "block";
-    }
     function setvalue(under,underId){
-        document.getElementById('payacc').value= under;
-        document.getElementById('underForm').style.visibility= "block";
-        document.getElementsByName('underhidden').value= underId;
-    }
+            document.getElementById('under').value= under;
+            document.getElementById('underForm').style.visibility= "block";
+            document.getElementsByName('underhidden').value= underId;
+        }
+    function closeForm() {
+            document.getElementById("underForm").style.display = "none";
+        }
+    function showform(){
+            document.getElementById('underForm').style.display= "block";
+
+        }
 </script>
 
 
@@ -357,6 +356,19 @@
 <script>
     document.querySelector("#payacc").addEventListener('change', function(){
         window.location.assign('/party_create/' + this.value);
+    });
+    
+</script>
+
+
+
+<script>
+    document.querySelector('#payacc').addEventListener('submit', function(event){
+        event.preventDefault();
+        let acc = document.querySelector(".acc").value;
+        // let acc = document.querySelector("select[name='acc']").value;
+        //store acc in session
+        window.sessionStorage.setItem('acc', acc);
     });
     
 </script>

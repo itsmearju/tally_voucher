@@ -36,6 +36,7 @@ from django.db.models import Count
 from unittest import TextTestRunner
 from django.db.models import Q
 
+
 # Create your views here.
 
 def login(request):
@@ -12024,12 +12025,16 @@ def credit_party_list(request):
         else:
             return redirect('/')
         tally = Companies.objects.filter(id=t_id)
+        acc = request.session.get('acc', '')
         ledg_grp = tally_ledger.objects.filter(Q(under = 'Branch_Divisions')|Q(under = 'Sundry_Creditors')|Q(under = 'sundry_Debtors'))
         context = {
             'tally':tally,
             'ledg_grp':ledg_grp,
+            'acc':acc,
         }
     return render(request,'credit_party.html',context)
+
+
 
 def save_buyer(request):
     if request.method=='POST':
