@@ -801,6 +801,6 @@ urlpatterns = [
     path('voucher_page',views.voucher_page,name='voucher_page'),
     path('new_party_create',views.new_party_create,name='new_party_create'),
     path('save_buyer',views.save_buyer,name='save_buyer'),
-    path('allocation_page',views.allocation_page,name='allocation_page'),
+    path('allocation_page/<str:option>',views.allocation_page,name='allocation_page'),
     path('bill_details',views.bill_details,name='bill_details'),
     ]

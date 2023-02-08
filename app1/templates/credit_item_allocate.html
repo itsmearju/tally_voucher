@@ -75,7 +75,7 @@
             {% csrf_token %}
             <div class="p-0">
                 <div class="row container-fluid  p-2 m-0">
-                    <div class="col-sm-6 m-0 p-0"> <h5>Item Allocations For :</h5></div>
+                    <div class="col-sm-6 m-0 p-0"> <h5>Item Allocations For : <input type="hidden"id="item_name"value=""></h5></div>
                     
                     <div class="col-sm-6 m-0 p-0"></div>
                 </div>
@@ -187,7 +187,10 @@
         
         
 
-    
+    <script>
+        const itemName = document.getElementById("item_name");
+        itemName.textContent = localStorage.getItem("item");
+    </script>
     
 
     <script>

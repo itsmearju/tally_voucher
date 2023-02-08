@@ -11782,8 +11782,8 @@ def credit_note_voucher_page(request):
 
         comp = Companies.objects.get(id = t_id)
 
-        item_list = stock_itemcreation.objects.all()
-     
+        item_list = stock_itemcreation.objects.all() 
+            
         ledg_grp = tally_ledger.objects.filter(Q(under = 'Bank_Accounts')|Q(under = 'Cash_in_Hand')|Q(under = 'Branch_Divisions')|Q(under = 'Sundry_Creditors')|Q(under = 'sundry_Debtors'))
      
         vou  = credit_voucher.objects.values('vou_id').last()
@@ -12080,7 +12080,7 @@ def new_party_create(request):
             return redirect('credit_party_list')
     return render(request,'credit_new_party.html',{'tally':tally})
 
-def allocation_page(request):
+def allocation_page(request, option):
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
             t_id = request.session['t_id']
@@ -12088,7 +12088,8 @@ def allocation_page(request):
             return redirect('/')
         tally = Companies.objects.filter(id=t_id)
         gd=CreateGodown.objects.all()
-    return render(request,'credit_item_allocate.html',{'gd':gd,'tally':tally})
+        item = request.GET.get('item')
+    return render(request,'credit_item_allocate.html',{'gd':gd,'tally':tally,'item':item})
 
 def bill_details(request):
     if 't_id' in request.session:
