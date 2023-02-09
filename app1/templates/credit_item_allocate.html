@@ -71,11 +71,11 @@
             </div>
         </div>
         
-        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="#" autocomplete="off">
+        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'save_allocation' %}" autocomplete="off">
             {% csrf_token %}
             <div class="p-0">
                 <div class="row container-fluid  p-2 m-0">
-                    <div class="col-sm-6 m-0 p-0"> <h5>Item Allocations For : <input type="hidden"id="item_name"value=""></h5></div>
+                    <div class="col-sm-6 m-0 p-0"> <h5>Item Allocations For : <input class="text-white" type="hidden" name="item_name" id="item" value=""></h5></div>
                     
                     <div class="col-sm-6 m-0 p-0"></div>
                 </div>
@@ -172,8 +172,6 @@
                 <div>
                     <table>
                         <tr>
-                            
-                      
                             {% for l in gd %}
                                 <option onclick="setvalue('{{l.name}}','{{l.id}}')" class="btns_prnt">&nbsp;&nbsp;{{l.name}}</option>
                             {% endfor %}
@@ -185,13 +183,17 @@
             <button type="button" class="btn cancel close" onclick="closeForm()">x</button>
         </div>
         
-        
-
-    <script>
-        const itemName = document.getElementById("item_name");
+      
+       <script>
+        inputValue = localStorage.getItem('item').value;
+        document.getElementById("item").value = inputValue;
+       </script>
+       
+    <!-- <script>
+        document.getElementById("item_name").value = itemName;
         itemName.textContent = localStorage.getItem("item");
     </script>
-    
+     -->
 
     <script>
         function closeForm() {

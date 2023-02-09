@@ -1753,3 +1753,19 @@ class credit_voucher(models.Model):
     rate = models.IntegerField(null= True)
     amount = models.IntegerField(null= True)
     narration = models.CharField(max_length=255,null=True)
+
+class stock_allocation(models.Model):
+    item = models.CharField(max_length=100,null=True)
+    godown=models.CharField(max_length=100,null=True)
+    quantity=models.CharField(max_length=100,null=True)
+    rate=models.CharField(max_length=100,null=True)
+    per=models.CharField(max_length=100,null=True)
+    amount=models.CharField(max_length=100,null=True)
+
+class bill_details(models.Model):
+    bill_item = models.CharField(max_length=100,null=True)
+    upto = models.CharField(max_length=100,null=True)
+    on_acc = models.CharField(max_length=100,null=True)
+    name = models.CharField(max_length=100,null=True)
+    due_date = models.DateField(max_length=100,null=True)
+    amount = models.IntegerField(max_length=100,null=True)

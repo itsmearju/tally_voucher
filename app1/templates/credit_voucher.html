@@ -232,7 +232,7 @@
                                         {% endfor %}
 
                                         </select>  -->
-                                        <input type="text"  id="item"class="form-control" name="item"onclick="showForm()" >
+                                        <input type="text"  id="item" class="form-control" name="item"onclick="showForm()" >
                                             </span>
                                     </div>   
                                        
@@ -353,9 +353,7 @@
         }
     function showform(){
             document.getElementById('underForm').style.display= "block";
-
         }
-
     function closeForm() {
             document.getElementById("myForm").style.display = "none";
         }
@@ -363,8 +361,9 @@
             document.getElementById('myForm').style.display= "block";
         }
     function Set_value(under){
-            document.getElementById('item').value= under;
-            window.location.assign('/allocation_page/' + this.value);
+            document.getElementById("item").value= under;
+            localStorage.setItem('item', document.getElementById("item").value);
+            window.location.assign('/allocation_page/' + document.getElementById("item").value);
             document.getElementById('myForm').style.visibility= "block";
         }
 </script>
@@ -377,7 +376,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
-
     
 
 <script>

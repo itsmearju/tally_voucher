@@ -12091,7 +12091,29 @@ def allocation_page(request, option):
         item = request.GET.get('item')
     return render(request,'credit_item_allocate.html',{'gd':gd,'tally':tally,'item':item})
 
-def bill_details(request):
+def save_allocation(request):
+    if request.method == 'POST':
+        data = stock_allocation()
+        name = request.POST.get('item_name')
+        godown = request.POST.get('godow')
+        qua = request.POST.get('quantity')
+        rate = request.POST.get('rate')
+        per = request.POST.get('per')
+        tot = request.POST.get('total')
+
+        data.item = name
+        data.godown = godown
+        data.quantity = qua
+        data.rate = rate
+        data.per = per
+        data.amount = tot
+        data.save()
+        
+        return redirect('credit_note_voucher_page')
+    else:
+        return redirect('allocation_page')
+
+def bill_detail(request):
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
             t_id = request.session['t_id']
@@ -12099,5 +12121,29 @@ def bill_details(request):
             return redirect('/')
         tally = Companies.objects.filter(id=t_id)
     return render(request,'credit_bill_details.html',{'tally':tally})
+
+def save_bill(request):
+    if request.method == 'POST':
+
+        detail = bill_details()
+
+        name = request.POST['name']
+        cr = request.POST['upto']
+        option = request.POST['select']
+        b_name = request.POST['b_name']
+        due = request.POST['due']
+        tot = request.POST['total']
+
+        detail.bill_item = name
+        detail.upto = cr
+        detail.on_acc = option
+        detail.name = b_name
+        detail.due_date = due
+        detail.amount = tot
+        detail.save()
+
+        return redirect('credit_note_voucher_page')
+    else:
+        return redirect('bill_detail')
 
 

@@ -802,5 +802,7 @@ urlpatterns = [
     path('new_party_create',views.new_party_create,name='new_party_create'),
     path('save_buyer',views.save_buyer,name='save_buyer'),
     path('allocation_page/<str:option>',views.allocation_page,name='allocation_page'),
-    path('bill_details',views.bill_details,name='bill_details'),
+    path('save_allocation',views.save_allocation,name='save_allocation'),
+    path('bill_detail',views.bill_detail,name='bill_detail'),
+    path('save_bill',views.save_bill,name='save_bill'),
     ]
