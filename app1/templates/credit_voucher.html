@@ -123,7 +123,7 @@
                     <span class="pull-right clickable" data-effect="fadeOut"><i class="fa fa-times" style="color: black;"></i></span></a>
                 </div>                      
             </div>
-            <form action="#" id="frmvouch" method="POST" >
+            <form action="{% url 'save_credit_voucher' %}" id="frmvouch" method="POST" >
                 {% csrf_token %}
             <div class="table-responsive">
                 <table class="table table-bordered table-sm border-dark" style="background-color: rgb(245, 240, 230);color:rgb(0, 0, 0);">
@@ -184,7 +184,7 @@
                             <label>&nbsp;&nbsp;Ledger Account&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</label>
     
                               
-                            <input type="text"  id="payacc1"class="form-control" onclick="showform()" required>
+                            <input type="text"  id="payacc1"class="form-control"name="ledger" onclick="showform()" required>
                             
                         </span>
                         <span class="input-group">
@@ -239,13 +239,13 @@
                                     
                                 </td>
                                 <td colspan="2" class="text-end mt-0" style="border: none; ">
-                                    <input type="number" class = 'txt amnt pt-0' id= 'quantity' name = 'quant'></td>
+                                    <input type="number" class = 'txt amnt pt-0' id= 'quantity' name = 'quant'oninput="calculate()"></td>
 
                                     <td colspan="2" class="text-end mt-0 " style="border: none; ">
-                                        <input type="number" class = 'txt amnt pt-0' id= 'rte' name = 'rate'  onchange="createRow()"></td>
+                                        <input type="number" class = 'txt amnt pt-0' id= 'rte' name = 'rate'  onchange="createRow()"oninput="calculate()"></td>
 
                                 <td colspan="2" class="text-end mt-0 " style="border: none; ">
-                                    <input type="number" class = 'txt amnt pt-0' id= 'amnt1' name = 'amnt' oninput='calculateTotal()'></td>
+                                    <input type="number" class = 'txt amnt pt-0'value="" id= 'amnt1' name = 'amnt' oninput='calculateTotal()'readonly></td>
                                     
 
                             </tr>
@@ -273,7 +273,7 @@
                         <label class="text-dark text-right" >Total : </label>
                         <!--<input type="text" class="txt " id ='total' name = 'total' readonly>
                         <label class="txt" id ='total' name = 'total' ></label>-->
-                        <input  type="number" class="txt " id = 'total' name="total" readonly>
+                        <input  type="number" class="txt " id = 'total'value="" name="total" readonly>
                       </td>
                       
                     </tfoot>
@@ -367,6 +367,20 @@
             document.getElementById('myForm').style.visibility= "block";
         }
 </script>
+
+<script>
+    function calculate(){
+        var quantity = document.getElementById("quantity").value;
+        var rate = document.getElementById("rte").value;
+        var amount = document.getElementById("amnt1");
+        amount.value = quantity * rate;
+    }
+ </script>
+ <script>
+    tot = document.getElementById('amnt1').value;
+    document.getElementById('total').value = tot;
+ </script>
+
 
 
 
@@ -512,7 +526,7 @@ function createRow(){
 
    
     id++;
-    $(".part").append('<tr style="border: none;"><td colspan="12" style="border: none;" class="mt-4"><select id="payacc'+id+'" name="acc1" class=" rows acc form-control m-2 p-0"><option id = "opt" class="form-control" >&nbsp;&nbsp;Name of Item </option> {% for i in list %}<option id = "opt" value="{{i.id}}">&nbsp;&nbsp;{{i.name}}</option>{% endfor %}</select><label class = "blnc1" id="blnc'+id+'" class="p-0 mt-0 txt " style="color: #000;"></label></td><td colspan="2" class="text-right mt-0" style="border: none; "><input type="number" class = "txt amnt" id= "amnt'+id+'" oninput="calculateTotal();" onchange="createRow()" name = "amnt" ><input type="number" class = "txt amnt" id= "amnt2'+id+'" name = "amnt" ><input type="number" class = "txt amnt" id= "amnt3'+id+'"  name = "amnt" ></td></tr>')
+    $(".part").append('<tr style="border: none;"><td colspan="12" style="border: none;" class="mt-4"> <input type="text"  id="item" class="form-control" name="item"onclick="showForm()" ></td><td colspan="2" class="text-end mt-0 mx-5" style="border: none; "><input type="number" class = "txt amnt mx-5 float-right" id= "amnt'+id+'" oninput="calculateTotal();" onchange="createRow()" name = "amnt" ><input type="number" class = "txt amnt mx-5  float-right" id= "amnt2'+id+'" name = "amnt" ><input type="number" class = "txt amnt mx-5  float-right" id= "amnt3'+id+'"  name = "amnt" ></td></tr>')
 
        
 }

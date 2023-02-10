@@ -11815,13 +11815,14 @@ def save_credit_voucher(request):
 
             pid = request.POST['idlbl']
             accnt = request.POST['acc']
+            ledge = request.POST['ledger']
             date1 = request.POST.get('date1')
             amount=request.POST.get('total')
             nrt = request.POST.get('narrate')
             account = tally_ledger.objects.values('name').get(id = accnt)
             
             print(amount)
-            credit_voucher(pid = pid,account = account['name'],date = date1 , amount = amount , narration = nrt ,voucher = vouch).save()
+            credit_voucher(vou_id = pid,account = account['name'],led_account=ledge, date = date1 , amount = amount , narration = nrt ,voucher = vouch).save()
 
         return render(request,'credit_voucher.html')
 
