@@ -232,7 +232,9 @@
                                         {% endfor %}
 
                                         </select>  -->
-                                        <input type="text"  id="item" class="form-control" name="item"onclick="showForm()" >
+                                        
+                                            <input type="text"  id="item" class="form-control" name="value"onclick="showForm()" value="{{ value }}">
+                                       
                                             </span>
                                     </div>   
                                        
@@ -242,7 +244,7 @@
                                     <input type="number" class = 'txt amnt pt-0' id= 'quantity' name = 'quant'oninput="calculate()"></td>
 
                                     <td colspan="2" class="text-end mt-0 " style="border: none; ">
-                                        <input type="number" class = 'txt amnt pt-0' id= 'rte' name = 'rate'  onchange="createRow()"oninput="calculate()"></td>
+                                        <input type="number" class = 'txt amnt pt-0' id= 'rte' name = 'rate'value="{{ rate }}"  onchange="createRow()"oninput="calculate()"></td>
 
                                 <td colspan="2" class="text-end mt-0 " style="border: none; ">
                                     <input type="number" class = 'txt amnt pt-0'value="" id= 'amnt1' name = 'amnt' oninput='calculateTotal()'readonly></td>
@@ -318,7 +320,7 @@
         
        
         <div class="form-popup " id="myForm" style="background-color: #213b52" >
-            <form action="#" class="form-container1" >
+            <form action="{% url 'save_item' %}?value={{ value }}"method="get" class="form-container1" >
                 <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Stock Item</h6>
                 <a href="{% url 'stock_items_creation' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
                 <hr>
@@ -326,7 +328,7 @@
                     <table>
                         <tr>
                             {% for l in list %}
-                                <option  name ='opti' onclick="Set_value('{{l.name}}','{{l.id}}')" class="btns_prnt">&nbsp;&nbsp;{{l.name}}</option>
+                                <input type="submit" name ='value' onclick="Set_value('{{l.name}}','{{l.id}}')" class="btns_prnt"value="{{l.name}}">
                             {% endfor %}
                         </tr>
                     </table>
@@ -362,8 +364,8 @@
         }
     function Set_value(under){
             document.getElementById("item").value= under;
-            localStorage.setItem('item', document.getElementById("item").value);
-            window.location.assign('/allocation_page/' + document.getElementById("item").value);
+            // localStorage.setItem('item', document.getElementById("item").value);
+            // window.location.assign('/allocation_page/' + document.getElementById("item").value);
             document.getElementById('myForm').style.visibility= "block";
         }
 </script>
@@ -373,7 +375,9 @@
         var quantity = document.getElementById("quantity").value;
         var rate = document.getElementById("rte").value;
         var amount = document.getElementById("amnt1");
+        var total = document.getElementById("total");
         amount.value = quantity * rate;
+        total.value = quantity * rate;
     }
  </script>
  <script>

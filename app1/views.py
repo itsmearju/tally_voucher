@@ -35,6 +35,8 @@ from django.db.models.functions import Extract
 from django.db.models import Count
 from unittest import TextTestRunner
 from django.db.models import Q
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 # Create your views here.
@@ -11772,7 +11774,7 @@ def receipt_pcur_balance_change(request):
 
 #-----arjun----credit note voucher-----
 
-def credit_note_voucher_page(request):
+def credit_note_voucher_page(request, value, rate):
 
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
@@ -11796,6 +11798,8 @@ def credit_note_voucher_page(request):
                     'date1' : date.today(),
                     'ledg' : ledg_grp,
                     'v' : counter,
+                    'value':value,
+                    'rate':rate,
                 }
         return render(request,'credit_voucher.html',context)
 
@@ -12081,7 +12085,7 @@ def new_party_create(request):
             return redirect('credit_party_list')
     return render(request,'credit_new_party.html',{'tally':tally})
 
-def allocation_page(request, option):
+def allocation_page(request, value):
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
             t_id = request.session['t_id']
@@ -12090,19 +12094,19 @@ def allocation_page(request, option):
         tally = Companies.objects.filter(id=t_id)
         gd=CreateGodown.objects.all()
         item = request.GET.get('item')
-    return render(request,'credit_item_allocate.html',{'gd':gd,'tally':tally,'item':item})
+    return render(request,'credit_item_allocate.html',{'gd':gd,'tally':tally,'item':item,'value':value})
 
 def save_allocation(request):
     if request.method == 'POST':
         data = stock_allocation()
-        name = request.POST.get('item_name')
+        value = request.POST.get('item')
         godown = request.POST.get('godow')
         qua = request.POST.get('quantity')
         rate = request.POST.get('rate')
         per = request.POST.get('per')
         tot = request.POST.get('total')
 
-        data.item = name
+        data.item = value
         data.godown = godown
         data.quantity = qua
         data.rate = rate
@@ -12110,10 +12114,10 @@ def save_allocation(request):
         data.amount = tot
         data.save()
         
-        return redirect('credit_note_voucher_page')
+        return HttpResponseRedirect(reverse("credit_note_voucher_page", kwargs={'value':value,'rate':rate}))
     else:
         return redirect('allocation_page')
-
+  
 def bill_detail(request):
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
@@ -12146,5 +12150,13 @@ def save_bill(request):
         return redirect('credit_note_voucher_page')
     else:
         return redirect('bill_detail')
+
+
+def save_item(request):
+    value = request.GET.get('value')
+    if value:
+         return redirect("allocation_page", value)
+    return render(request,'credit_voucher.html',{'value':value})
+
 
 
