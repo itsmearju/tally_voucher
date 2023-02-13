@@ -11774,7 +11774,7 @@ def receipt_pcur_balance_change(request):
 
 #-----arjun----credit note voucher-----
 
-def credit_note_voucher_page(request, value, rate):
+def credit_note_voucher_page(request):
 
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
@@ -11798,10 +11798,9 @@ def credit_note_voucher_page(request, value, rate):
                     'date1' : date.today(),
                     'ledg' : ledg_grp,
                     'v' : counter,
-                    'value':value,
-                    'rate':rate,
                 }
         return render(request,'credit_voucher.html',context)
+
 
 
 def save_credit_voucher(request):
@@ -11825,8 +11824,9 @@ def save_credit_voucher(request):
             nrt = request.POST.get('narrate')
             account = tally_ledger.objects.values('name').get(id = accnt)
             
-            print(amount)
             credit_voucher(vou_id = pid,account = account['name'],led_account=ledge, date = date1 , amount = amount , narration = nrt ,voucher = vouch).save()
+
+            return redirect('bill_detail', amount)
 
         return render(request,'credit_voucher.html')
 
@@ -11983,18 +11983,19 @@ def save_ledger(request):
     return redirect('/')
 
 
-def party_create(request, option):
+def party_create(request, name):
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
             t_id = request.session['t_id']
         else:
             return redirect('/')
         tally = Companies.objects.filter(id=t_id)
-    return render(request, 'party_details_credit.html',{'tally':tally})
+    return render(request, 'party_details_credit.html',{'tally':tally,'name':name})
 
 
 def save_receipt_details(request):
     if request.method=='POST':
+        p_name=request.POST['pname']
         track=request.POST['Track']
         disdo=request.POST['dis_doc']
         distra=request.POST['dis_t']
@@ -12005,7 +12006,8 @@ def save_receipt_details(request):
         motor=request.POST['veh']
         invoice=request.POST['invo']
         date_2=request.POST['dates']
-        party=party_details( track_no=track,
+        party=party_details(  name=p_name,
+                              track_no=track,
                               dis_doc=disdo,
                               dis_thr=distra,
                               desti=dest,
@@ -12018,12 +12020,12 @@ def save_receipt_details(request):
                               )
         party.save()
         print("success")
-        return redirect('credit_party_list')
+        return redirect('credit_party_list', p_name)
     else:
         return redirect('party_create')
 
 
-def credit_party_list(request):
+def credit_party_list(request, p_name):
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
             t_id = request.session['t_id']
@@ -12036,6 +12038,7 @@ def credit_party_list(request):
             'tally':tally,
             'ledg_grp':ledg_grp,
             'acc':acc,
+            'p_name':p_name,
         }
     return render(request,'credit_party.html',context)
 
@@ -12043,7 +12046,7 @@ def credit_party_list(request):
 
 def save_buyer(request):
     if request.method=='POST':
-        bill=request.POST['buy_name']
+        bill=request.POST['b_name']
         mailing=request.POST['m_name']
         addrre=request.POST['address']
         s_ta=request.POST['state']
@@ -12056,7 +12059,7 @@ def save_buyer(request):
                               contr=c_ountr,
                               )
         data.save()
-        return redirect('credit_note_voucher_page')
+        return HttpResponseRedirect(reverse("credit_note_voucher", kwargs={'bill':bill}))
     else:
         return redirect('/')
 
@@ -12114,18 +12117,18 @@ def save_allocation(request):
         data.amount = tot
         data.save()
         
-        return HttpResponseRedirect(reverse("credit_note_voucher_page", kwargs={'value':value,'rate':rate}))
+        return HttpResponseRedirect(reverse("credit_note_voucher", kwargs={'value':value,'rate':rate}))
     else:
         return redirect('allocation_page')
   
-def bill_detail(request):
+def bill_detail(request, amount):
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
             t_id = request.session['t_id']
         else:
             return redirect('/')
         tally = Companies.objects.filter(id=t_id)
-    return render(request,'credit_bill_details.html',{'tally':tally})
+    return render(request,'credit_bill_details.html',{'tally':tally,'amount':amount})
 
 def save_bill(request):
     if request.method == 'POST':
@@ -12148,7 +12151,7 @@ def save_bill(request):
         detail.save()
 
         return redirect('credit_note_voucher_page')
-    else:
+    else: 
         return redirect('bill_detail')
 
 
@@ -12158,5 +12161,25 @@ def save_item(request):
          return redirect("allocation_page", value)
     return render(request,'credit_voucher.html',{'value':value})
 
+def credit_note_voucher(request, value, rate, bill):
+    if 't_id' in request.session:
+        if request.session.has_key('t_id'):
+            t_id = request.session['t_id']
+        else:
+            return redirect('/')
+        tally = Companies.objects.filter(id=t_id)
+        bill = request.POST.get('bill')   
+        context = {
+            'tally':tally,
+            'value':value,
+            'rate':rate,
+            'bill':bill,
+        } 
+    return render(request,'credit_voucher.html',context)
 
+def fetch_party(request):
+    name = request.GET.get('name')
+    if name:
+         return redirect("party_create", name)
+    return render(request,'credit_voucher.html',{'name':name})
 

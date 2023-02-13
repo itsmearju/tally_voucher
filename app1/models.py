@@ -1723,6 +1723,7 @@ class receipt_voucher(models.Model):
 
 
 class party_details(models.Model):
+    name = models.CharField(max_length=100,null=True)
     track_no = models.CharField(max_length=255,null=True)
     dis_doc = models.CharField(max_length=255,null=True)
     dis_thr = models.CharField(max_length=255,null=True)

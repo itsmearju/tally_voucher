@@ -79,6 +79,11 @@
                     {% csrf_token %}
                     <div class="p-3">
                         <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label >Party Name : </label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="pname"value="{{ name }}" class="text-white" style="background-color: rgba(240, 248, 255, 0);border:none;"></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div> 
+                        <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-4 m-0 p-0"> <label for="a">Tracking No(s)</label></div>
                             <div class="col-sm-6 m-0 p-0"><input type="text" name="Track" class="form-control" id="a" required></div>
                             <div class="col-sm-4 m-0 p-0"></div>

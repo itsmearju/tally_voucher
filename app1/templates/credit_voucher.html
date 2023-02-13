@@ -156,16 +156,16 @@
 
                         
                            
-                            <select id="payacc"  name="acc"  class="mb-4 form-control" style="width: 0;"onclick="closeForm()">
+                            <!-- <select id="payacc"  name="acc"  class="mb-4 form-control" style="width: 0;"onclick="closeForm()">
                                 <option id = "opt">&nbsp;&nbsp;List of Ledger Accounts </option> 
                                 {% for i in ledg %}
                                 <option id = "opt" name ='opt' value="{{i.id}}" >&nbsp;&nbsp;{{i.name}}</option> 
                                 {% endfor %}
-                            </select> 
+                            </select>  -->
                            
                             
                        
-                       <!-- <input type="text"  id="payacc"class="form-control" name="acc"onclick="showform();" required>  -->
+                       <input type="text"value="{{ bill }}"  id="payacc"class="form-control" name="acc"value=""onclick="ShowForm()" required> 
                         
                         
                     </span>
@@ -247,8 +247,7 @@
                                         <input type="number" class = 'txt amnt pt-0' id= 'rte' name = 'rate'value="{{ rate }}"  onchange="createRow()"oninput="calculate()"></td>
 
                                 <td colspan="2" class="text-end mt-0 " style="border: none; ">
-                                    <input type="number" class = 'txt amnt pt-0'value="" id= 'amnt1' name = 'amnt' oninput='calculateTotal()'readonly></td>
-                                    
+                                    <input type="number" class = 'txt amnt pt-0'value="" id= 'amnt1' name = 'amnt' oninput='calculateTotal()'readonly></td>                
 
                             </tr>
 
@@ -298,6 +297,26 @@
 </div>
     </div>
     <div class="col-lg-2">
+
+        <div class="form-popup " id="firstForm" style="background-color: #213b52" >
+            <form action="{% url 'fetch_party' %}"method="get" class="form-container1" >
+                <h6 style="background-color:rgb(17, 169, 240) ;color:white text"> of Ledger Accounts</h6>
+                <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+                <hr>
+                <div>
+                    <table>   
+                        <tr>
+                            {% for l in ledg %}
+                                <input type="submit"  name ='name' onclick="nameValue('{{l.name}}','{{l.id}}')" class="btns_prnt"value="{{l.name}}">
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+                <input type="text" name="id" hidden value="{{l.id}}">
+            </form>
+            <button type="button" class="btn cancel close" onclick="closeForm()">x</button>
+        </div>
+        
 
         <div class="form-popup " id="underForm" style="background-color: #213b52" >
             <form action="#" class="form-container1" >
@@ -368,6 +387,14 @@
             // window.location.assign('/allocation_page/' + document.getElementById("item").value);
             document.getElementById('myForm').style.visibility= "block";
         }
+    function ShowForm(){
+            document.getElementById('firstForm').style.display= "block";
+        }
+    function nameValue(under,underId){
+            document.getElementById("payacc").value= under;
+            document.getElementById('firstForm').style.visibility= "block";
+            document.getElementsByName('underform').value= underId;
+        }
 </script>
 
 <script>
@@ -380,10 +407,7 @@
         total.value = quantity * rate;
     }
  </script>
- <script>
-    tot = document.getElementById('amnt1').value;
-    document.getElementById('total').value = tot;
- </script>
+
 
 
 
