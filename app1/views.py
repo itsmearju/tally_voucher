@@ -12046,20 +12046,22 @@ def credit_party_list(request, p_name):
 
 def save_buyer(request):
     if request.method=='POST':
-        bill=request.POST['b_name']
+        value=request.POST['b_name']
         mailing=request.POST['m_name']
         addrre=request.POST['address']
         s_ta=request.POST['state']
         c_ountr=request.POST['country']
         
-        data=new_buyer( bill_to=bill,
+        data=new_buyer( bill_to=value,
                               mail=mailing,
                               addr=addrre,
                               stat=s_ta,
                               contr=c_ountr,
                               )
         data.save()
-        return HttpResponseRedirect(reverse("credit_note_voucher", kwargs={'bill':bill}))
+        
+        #return redirect('credit_note_voucher', value)
+        return HttpResponseRedirect(reverse("credit_note_voucher", value))
     else:
         return redirect('/')
 
@@ -12161,25 +12163,40 @@ def save_item(request):
          return redirect("allocation_page", value)
     return render(request,'credit_voucher.html',{'value':value})
 
-def credit_note_voucher(request, value, rate, bill):
+def credit_note_voucher(request, value, rate):
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
             t_id = request.session['t_id']
         else:
             return redirect('/')
         tally = Companies.objects.filter(id=t_id)
-        bill = request.POST.get('bill')   
         context = {
             'tally':tally,
             'value':value,
             'rate':rate,
-            'bill':bill,
+            #'bill':bill,
         } 
     return render(request,'credit_voucher.html',context)
+
 
 def fetch_party(request):
     name = request.GET.get('name')
     if name:
          return redirect("party_create", name)
-    return render(request,'credit_voucher.html',{'name':name})
+    return render(request,'credit_voucher.html',{'name':name}) 
+
+
+# def credit_note_voucher_home(request, bill):
+#     if 't_id' in request.session:
+#         if request.session.has_key('t_id'):
+#             t_id = request.session['t_id']
+#         else:
+#             return redirect('/')
+#         tally = Companies.objects.filter(id=t_id)
+#         context = {
+#             'tally':tally,
+#             'bill':bill,
+#         }
+
+#     return render(request,'credit_voucher.html',context)
 

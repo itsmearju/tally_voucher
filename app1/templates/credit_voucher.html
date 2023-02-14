@@ -165,7 +165,7 @@
                            
                             
                        
-                       <input type="text"value="{{ bill }}"  id="payacc"class="form-control" name="acc"value=""onclick="ShowForm()" required> 
+                       <input type="text"value="{{ value }}"  id="payacc"class="form-control" name="acc"value=""onclick="ShowForm()" required> 
                         
                         
                     </span>
@@ -285,10 +285,6 @@
                   </div>  
                 
               </div>
-             
-                
-
-
               
 
             </form>
@@ -300,7 +296,7 @@
 
         <div class="form-popup " id="firstForm" style="background-color: #213b52" >
             <form action="{% url 'fetch_party' %}"method="get" class="form-container1" >
-                <h6 style="background-color:rgb(17, 169, 240) ;color:white text"> of Ledger Accounts</h6>
+                <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Ledger Accounts</h6>
                 <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
                 <hr>
                 <div>
