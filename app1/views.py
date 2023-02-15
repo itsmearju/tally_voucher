@@ -11983,14 +11983,14 @@ def save_ledger(request):
     return redirect('/')
 
 
-def party_create(request, name):
-    if 't_id' in request.session:
-        if request.session.has_key('t_id'):
-            t_id = request.session['t_id']
-        else:
-            return redirect('/')
-        tally = Companies.objects.filter(id=t_id)
-    return render(request, 'party_details_credit.html',{'tally':tally,'name':name})
+# def party_create(request, name):
+#     if 't_id' in request.session:
+#         if request.session.has_key('t_id'):
+#             t_id = request.session['t_id']
+#         else:
+#             return redirect('/')
+#         tally = Companies.objects.filter(id=t_id)
+#     return render(request, 'credit_voucher.html',{'tally':tally,'name':name})
 
 
 def save_receipt_details(request):
@@ -12179,11 +12179,11 @@ def credit_note_voucher(request, value, rate):
     return render(request,'credit_voucher.html',context)
 
 
-def fetch_party(request):
-    name = request.GET.get('name')
-    if name:
-         return redirect("party_create", name)
-    return render(request,'credit_voucher.html',{'name':name}) 
+# def fetch_party(request):
+#     name = request.GET.get('name')
+#     if name:
+#          return redirect("party_create", name)
+#     return render(request,'credit_voucher.html',{'name':name}) 
 
 
 # def credit_note_voucher_home(request, bill):

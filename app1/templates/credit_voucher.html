@@ -80,7 +80,7 @@
             text-decoration: none;
             text-align: end;
         }
-        .form-popup {
+        .short {
             display: none;
             position: fixed;
             top: 150px;
@@ -89,6 +89,12 @@
             z-index: 9;
             width: 300px;
             height: 450px;
+        }
+        .modal{
+            display: none;
+            position: fixed;
+            border: 1px solid #f1f1f1;
+            top: 140px;
         }
         .content a:hover {
             background-color: rgb(238, 167, 75);
@@ -110,8 +116,7 @@
         }
        
 </style>
-<div class="row">
-    <div class="col-lg-10">
+
 <div class="container-fluid" >
     <div class="main-panel" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
         <div class="content-wrapper" >
@@ -165,7 +170,7 @@
                            
                             
                        
-                       <input type="text"value="{{ value }}"  id="payacc"class="form-control" name="acc"value=""onclick="ShowForm()" required> 
+                       <input type="text"value="{{ value }}"  id="payacc"class="form-control" name="acc"value=""onclick="Form()" required> 
                         
                         
                     </span>
@@ -176,7 +181,6 @@
                     
                     </span>
                         </div>
-
 
 
                         <div class= "account" style="color: #000;font-weight:500 ;text-transform:capitalize; font-size: 18px;">
@@ -291,11 +295,11 @@
         </div>
     </div>
 </div>
-    </div>
-    <div class="col-lg-2">
+    
+    
 
-        <div class="form-popup " id="firstForm" style="background-color: #213b52" >
-            <form action="{% url 'fetch_party' %}"method="get" class="form-container1" >
+        <div class="form-popup short" id="firstForm" style="background-color: #213b52" >
+            <form action="#"method="get" class="form-container1" >
                 <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Ledger Accounts</h6>
                 <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
                 <hr>
@@ -303,7 +307,7 @@
                     <table>   
                         <tr>
                             {% for l in ledg %}
-                                <input type="submit"  name ='name' onclick="nameValue('{{l.name}}','{{l.id}}')" class="btns_prnt"value="{{l.name}}">
+                                <input type="submit"  name ='name' onclick="nameValue('{{l.name}}','{{l.id}}');Value()" class="btns_prnt"value="{{l.name}}">
                             {% endfor %}
                         </tr>
                     </table>
@@ -314,7 +318,7 @@
         </div>
         
 
-        <div class="form-popup " id="underForm" style="background-color: #213b52" >
+        <div class="form-popup short" id="underForm" style="background-color: #213b52" >
             <form action="#" class="form-container1" >
                 <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Ledger Accounts</h6>
                 <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
@@ -334,7 +338,7 @@
         </div>
         
        
-        <div class="form-popup " id="myForm" style="background-color: #213b52" >
+        <div class="form-popup short " id="myForm" style="background-color: #213b52" >
             <form action="{% url 'save_item' %}?value={{ value }}"method="get" class="form-container1" >
                 <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Stock Item</h6>
                 <a href="{% url 'stock_items_creation' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
@@ -351,12 +355,153 @@
                 <input type="text" name="underhidden" hidden value="{{l.id}}">
             </form>
             <button type="button" class="btn cancel close" onclick="closeForm()">x</button>
-        </div>
-        
-       
+        </div> 
 
-    </div>
-</div>
+
+        <div class="form-popup modal ScrollStyle" id="partyForm" style="background-color: #213b52" >
+            <form action="#"method="get" class="" >
+
+                
+                <div class="m-0">
+                    <div class="row   p-2 m-0">
+                        <div class="col-sm-3 m-0 p-0"></div>  
+                        <div class="col-sm-6 m-0 p-0">
+                                
+                                <div class="row bg-info text-light p-2 m-0">
+                                    <div class="col-md-6">Party Details</div>
+                                    <div class="col-md-2">
+                                        {% for i in tally %}
+                                            {{i.name}}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                            <div class="row">
+                              
+                                
+                                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'save_receipt_details' %}" autocomplete="off">
+                                    {% csrf_token %}
+                                    <div class="p-3">
+                                        <div class="row   p-2 m-0">
+                                            <div class="col-sm-4 m-0 p-0"> <label >Party Name : </label></div>
+                                            <div class="col-sm-6 m-0 p-0"><input type="text" name="pname"value="{{ name }}" class="text-white" style="background-color: rgba(240, 248, 255, 0);border:none;"></div>
+                                            <div class="col-sm-4 m-0 p-0"></div>
+                                        </div> 
+                                        <div class="row  p-2 m-0">
+                                            <div class="col-sm-4 m-0 p-0"> <label for="a">Tracking No(s)</label></div>
+                                            <div class="col-sm-6 m-0 p-0"><input type="text" name="Track" class="form-control" id="a" required></div>
+                                            <div class="col-sm-4 m-0 p-0"></div>
+                                        </div> 
+                                       
+                                    </div>
+
+                                  <div class="col-lg-6">
+                                    
+                                    <div class="row  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                                        <div class="col-sm-12 m-0 p-4">
+                                            
+                                            <h5 class="text-center">Receipt Details</h5> <br>
+                                            <div class="row   p-2">
+                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Dispatch Doc No</label></div>
+                                                <div class="col-sm-4 m-0 p-0">
+                                                    <input type="text"class="form-control"name="dis_doc">
+                                                </div>
+                                                <div class="col-sm-0 m-0 p-0"></div>
+                                            </div>
+                                            <div class="row  p-2">
+                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Dispatched Through</label></div>
+                                                <div class="col-sm-4 m-0 p-0">
+                                                    <input type="text"class="form-control"name="dis_t">
+                                                </div>
+                                                <div class="col-sm-0 m-0 p-0"></div>
+                                            </div>
+                                            <div class="row   p-2">
+                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Destination</label>
+                                                </div>
+                                                <div class="col-sm-4 m-0 p-0">
+                                                    <input type="text"class="form-control"name="des">
+                                                </div>
+                                                <div class="col-sm-0 m-0 p-0"></div>
+                                            </div>
+                                            <div class="row   p-2">
+                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Carrier Name/Agent</label></div>
+                                                <div class="col-sm-4 m-0 p-0">
+                                                    <input type="text"class="form-control"name="carri">
+                                                </div>
+                                                <div class="col-sm-0 m-0 p-0"></div>
+                                            </div>
+                                            <div class="row  p-2">
+                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Bill of Lading/LR-RR No</label></div>
+                                                <div class="col-sm-4 m-0 p-0">
+                                                    <input type="text"class="form-control"name="bill">
+                                                </div>
+                                                <div class="col-sm-0 m-0 p-0"></div>
+                                            </div>
+                                            <div class="row  p-2">
+                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Date</label></div>
+                                                <div class="col-sm-4 m-0 p-0">
+                                                    <input type="date"class="form-control"name="dat_e">
+                                                </div>
+                                                <div class="col-sm-0 m-0 p-0"></div>
+                                            </div>
+                                            <div class="row   p-2">
+                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Motor Vehicle No</label></div>
+                                                <div class="col-sm-4 m-0 p-0">
+                                                    <input type="text"class="form-control"name="veh">
+                                                </div>
+                                                <div class="col-sm-0 m-0 p-0"></div>
+                                            </div>
+                                        </div>
+                                    </div> <br>
+                                </div>
+                                 <div class="col-lg-6">
+                                    <div class="row   p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                                        <div class="col-sm-12 m-0 p-4">
+                                            
+                                            <h5 class="text-center">Original Invoice Details</h5> <br>
+                                            <div class="row  p-2">
+                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Original Invoice No</label></div>
+                                                <div class="col-sm-4 m-0 p-0">
+                                                    <input type="text"class="form-control"name="invo">
+                                                </div>
+                                                <div class="col-sm-0 m-0 p-0"></div>
+                                            </div>
+                                            <div class="row   p-2">
+                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Date</label></div>
+                                                <div class="col-sm-4 m-0 p-0">
+                                                    <input type="date"class="form-control"name="dates">
+                                                </div>
+                                                <div class="col-sm-0 m-0 p-0"></div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                 </div>
+                
+                                    <div class="enter w-100 py-4"><button type="submit" class="btn btn-info w-15">SUBMIT</button></div> 
+                                </form>
+
+                            </div>
+                           </div>
+
+                        </div>
+                    <div class="col-sm-5 m-0 p-0"></div>
+                </div>
+            
+                
+            </form>
+            <button type="button" class="btn cancel close" onclick="closeForm()">x</button>
+        </div> 
+
+    
+
+
+
+
+
+<!--modal for party create receipt-->
+
+
 
 
 <script>
@@ -389,6 +534,14 @@
     function nameValue(under,underId){
             document.getElementById("payacc").value= under;
             document.getElementById('firstForm').style.visibility= "block";
+            document.getElementsByName('underform').value= underId;
+        }
+        function Form(){
+            document.getElementById('partyForm').style.display= "block";
+        }
+    function Value(under,underId){
+            document.getElementById("payacc").value= under;
+            document.getElementById('partyForm').style.visibility= "block";
             document.getElementsByName('underform').value= underId;
         }
 </script>
