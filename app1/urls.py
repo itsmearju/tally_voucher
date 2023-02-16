@@ -793,7 +793,7 @@ urlpatterns = [
     #------arjun------creditnote--voucher--
 
     path('save_credit_voucher',views.save_credit_voucher,name='save_credit_voucher'),
-    path('credit_note_voucher_page',views.credit_note_voucher_page,name='credit_note_voucher_page'),
+    path('credit_note_voucher_page/',views.credit_note_voucher_page,name='credit_note_voucher_page'),
     path('ledger_create',views.ledger_create,name='ledger_create'),
     path('credit_note_voucher/<str:value>/<str:rate>',views.credit_note_voucher,name='credit_note_voucher'),
     #path('credit_note_voucher_home/<str:bill>',views.credit_note_voucher_home,name='credit_note_voucher_home'),
@@ -809,7 +809,7 @@ urlpatterns = [
     path('bill_detail/<str:amount>',views.bill_detail,name='bill_detail'),
     path('save_bill',views.save_bill,name='save_bill'),
     path('save_item',views.save_item,name='save_item'),
-    # path('fetch_party',views.fetch_party,name='fetch_party'),
+    path('fetch_party',views.fetch_party,name='fetch_party'),
 
     
     ]
