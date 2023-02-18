@@ -12182,7 +12182,7 @@ def credit_note_voucher(request, value, rate):
 def fetch_party(request):
     name = request.GET.get('name')
     if name:
-         return render(request,'credit_voucher.html',{'name':name, 'show_modal':True}) 
+         return render(request,'credit_voucher.html',{'name':name, 'show_modal':True})
     
 
 

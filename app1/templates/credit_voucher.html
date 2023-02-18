@@ -111,11 +111,7 @@
         .bt{
             text-align: end;
         }
-        .ScrollStyle{
-            /* max-height: 200px; */
-            overflow-y: scroll;
-            
-        }
+        
         .center{
         display: flex;
         align-items: center;
@@ -366,216 +362,188 @@
 
         <!-----tracking details----->
 
-        <div class="form-popup modal ScrollStyle" id="trackForm" style="background-color: #213b52" >
-            <form action="#">
 
+    <div class="modal fade" id="trackForm">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="background-color: #213b52; color:azure;">
                 
-                <div class="m-0">
-                    <div class="row   p-2 m-0">
-                        <div class="col-sm-3 m-0 p-0"></div>  
-                        <div class="col-sm-6 m-0 p-0">
-                                
-                                <div class="row bg-info text-light p-2 m-0">
-                                    <div class="col-md-6">Party Details</div>
-                                    <div class="col-md-2">
-                                        {% for i in tally %}
-                                            {{i.name}}
-                                        {% endfor %}
-                                    </div>
-                                </div>
-
-                            <div class="row">
-                              
-                                
-                                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'save_receipt_details' %}" autocomplete="off">
-                                    {% csrf_token %}
-                                    <div class="p-3 text-white">
-                                        <div class="row   p-2 m-0 ">
-                                            <div class="col-sm-4 m-0 p-0"> <label >Party Name : {{ name }}</label></div>
-                                            <div class="col-sm-6 m-0 p-0"><input type="text" name="pname"value="{{ name }}" class="text-white" style="background-color: rgba(240, 248, 255, 0);border:none;"></div>
-                                            <div class="col-sm-4 m-0 p-0"></div>
-                                        </div> 
-                                        <div class="row  p-2 m-0">
-                                            <div class="col-sm-4 m-0 p-0"> <label for="a">Tracking No(s)</label></div>
-                                            <div class="col-sm-6 m-0 p-0"><input type="text" name="Track" class="form-control" id="a" required></div>
-                                            <div class="col-sm-4 m-0 p-0"></div>
-                                        </div> 
-                                       
-                                    </div>
-
-                                  <div class="col-lg-6">
-                                    
-                                    <div class="row  p-0 m-0 text-white" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
-                                        <div class="col-sm-12 m-0 p-4">
-                                            
-                                            <h5 class="text-center">Receipt Details</h5> <br>
-                                            <div class="row   p-2">
-                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Dispatch Doc No</label></div>
-                                                <div class="col-sm-4 m-0 p-0">
-                                                    <input type="text"class="form-control"name="dis_doc">
-                                                </div>
-                                                <div class="col-sm-0 m-0 p-0"></div>
-                                            </div>
-                                            <div class="row  p-2">
-                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Dispatched Through</label></div>
-                                                <div class="col-sm-4 m-0 p-0">
-                                                    <input type="text"class="form-control"name="dis_t">
-                                                </div>
-                                                <div class="col-sm-0 m-0 p-0"></div>
-                                            </div>
-                                            <div class="row   p-2">
-                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Destination</label>
-                                                </div>
-                                                <div class="col-sm-4 m-0 p-0">
-                                                    <input type="text"class="form-control"name="des">
-                                                </div>
-                                                <div class="col-sm-0 m-0 p-0"></div>
-                                            </div>
-                                            <div class="row   p-2">
-                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Carrier Name/Agent</label></div>
-                                                <div class="col-sm-4 m-0 p-0">
-                                                    <input type="text"class="form-control"name="carri">
-                                                </div>
-                                                <div class="col-sm-0 m-0 p-0"></div>
-                                            </div>
-                                            <div class="row  p-2">
-                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Bill of Lading/LR-RR No</label></div>
-                                                <div class="col-sm-4 m-0 p-0">
-                                                    <input type="text"class="form-control"name="bill">
-                                                </div>
-                                                <div class="col-sm-0 m-0 p-0"></div>
-                                            </div>
-                                            <div class="row  p-2">
-                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Date</label></div>
-                                                <div class="col-sm-4 m-0 p-0">
-                                                    <input type="date"class="form-control"name="dat_e">
-                                                </div>
-                                                <div class="col-sm-0 m-0 p-0"></div>
-                                            </div>
-                                            <div class="row   p-2">
-                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Motor Vehicle No</label></div>
-                                                <div class="col-sm-4 m-0 p-0">
-                                                    <input type="text"class="form-control"name="veh">
-                                                </div>
-                                                <div class="col-sm-0 m-0 p-0"></div>
-                                            </div>
-                                        </div>
-                                    </div> <br>
-                                </div>
-                                 <div class="col-lg-6">
-                                    <div class="row   p-0 m-0 text-white" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
-                                        <div class="col-sm-12 m-0 p-4">
-                                            
-                                            <h5 class="text-center">Original Invoice Details</h5> <br>
-                                            <div class="row  p-2">
-                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Original Invoice No</label></div>
-                                                <div class="col-sm-4 m-0 p-0">
-                                                    <input type="text"class="form-control"name="invo">
-                                                </div>
-                                                <div class="col-sm-0 m-0 p-0"></div>
-                                            </div>
-                                            <div class="row   p-2">
-                                                <div class="col-sm-8 m-0 p-0"> <label for="c">Date</label></div>
-                                                <div class="col-sm-4 m-0 p-0">
-                                                    <input type="date"class="form-control"name="dates">
-                                                </div>
-                                                <div class="col-sm-0 m-0 p-0"></div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                 </div>
-                
-                                    <div class="enter w-100 py-4 "><button type="submit" class="btn btn-info w-15">SUBMIT</button></div> 
-                                </form>
-
+                <div class="modal-body">
+              
+                        <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'save_receipt_details' %}" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="p-3 text-white">
+                                <div class="row   p-2 m-0 ">
+                                    <div class="col-sm-4 m-0 p-0"> <label >Party Name : {{ name }}</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input type="text" name="pname"value="{{ name }}" class="text-white" style="background-color: rgba(240, 248, 255, 0);border:none;"></div>
+                                    <div class="col-sm-2 m-0 p-0"></div>
+                                </div> 
+                                <div class="row  p-2 m-0">
+                                    <div class="col-sm-4 m-0 p-0"> <label for="a">Tracking No(s)</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input type="text" name="Track" class="form-control" id="a" required></div>
+                                    <div class="col-sm-2 m-0 p-0"></div>
+                                </div> 
+                               
                             </div>
-                           </div>
-
+                    <div class="row">
+                        <div class="col-lg-6">
+                            
+                            <div class="row  p-0 m-0 text-white" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                                <div class="col-sm-12 m-0 p-4">
+                                    
+                                    <h5 class="text-center">Receipt Details</h5> <br>
+                                    <div class="row   p-2">
+                                        <div class="col-sm-8 m-0 p-0"> <label for="c">Dispatch Doc No</label></div>
+                                        <div class="col-sm-4 m-0 p-0">
+                                            <input type="text"class="form-control"name="dis_doc">
+                                        </div>
+                                        <div class="col-sm-0 m-0 p-0"></div>
+                                    </div>
+                                    <div class="row  p-2">
+                                        <div class="col-sm-8 m-0 p-0"> <label for="c">Dispatched Through</label></div>
+                                        <div class="col-sm-4 m-0 p-0">
+                                            <input type="text"class="form-control"name="dis_t">
+                                        </div>
+                                        <div class="col-sm-0 m-0 p-0"></div>
+                                    </div>
+                                    <div class="row   p-2">
+                                        <div class="col-sm-8 m-0 p-0"> <label for="c">Destination</label>
+                                        </div>
+                                        <div class="col-sm-4 m-0 p-0">
+                                            <input type="text"class="form-control"name="des">
+                                        </div>
+                                        <div class="col-sm-0 m-0 p-0"></div>
+                                    </div>
+                                    <div class="row   p-2">
+                                        <div class="col-sm-8 m-0 p-0"> <label for="c">Carrier Name/Agent</label></div>
+                                        <div class="col-sm-4 m-0 p-0">
+                                            <input type="text"class="form-control"name="carri">
+                                        </div>
+                                        <div class="col-sm-0 m-0 p-0"></div>
+                                    </div>
+                                    <div class="row  p-2">
+                                        <div class="col-sm-8 m-0 p-0"> <label for="c">Bill of Lading/LR-RR No</label></div>
+                                        <div class="col-sm-4 m-0 p-0">
+                                            <input type="text"class="form-control"name="bill">
+                                        </div>
+                                        <div class="col-sm-0 m-0 p-0"></div>
+                                    </div>
+                                    <div class="row  p-2">
+                                        <div class="col-sm-8 m-0 p-0"> <label for="c">Date</label></div>
+                                        <div class="col-sm-4 m-0 p-0">
+                                            <input type="date"class="form-control"name="dat_e">
+                                        </div>
+                                        <div class="col-sm-0 m-0 p-0"></div>
+                                    </div>
+                                    <div class="row   p-2">
+                                        <div class="col-sm-8 m-0 p-0"> <label for="c">Motor Vehicle No</label></div>
+                                        <div class="col-sm-4 m-0 p-0">
+                                            <input type="text"class="form-control"name="veh">
+                                        </div>
+                                        <div class="col-sm-0 m-0 p-0"></div>
+                                    </div>
+                                </div>
+                            </div> <br>
                         </div>
-                    <div class="col-sm-5 m-0 p-0"></div>
-                </div>
-            
-                
-            </form>
-            <button type="button" class="btn cancel close" onclick="closeForm()">x</button>
-        </div> 
+                         <div class="col-lg-6">
+                            <div class="row   p-0 m-0 text-white" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                                <div class="col-sm-12 m-0 p-4">
+                                    
+                                    <h5 class="text-center">Original Invoice Details</h5> <br>
+                                    <div class="row  p-2">
+                                        <div class="col-sm-8 m-0 p-0"> <label for="c">Original Invoice No</label></div>
+                                        <div class="col-sm-4 m-0 p-0">
+                                            <input type="text"class="form-control"name="invo">
+                                        </div>
+                                        <div class="col-sm-0 m-0 p-0"></div>
+                                    </div>
+                                    <div class="row   p-2">
+                                        <div class="col-sm-8 m-0 p-0"> <label for="c">Date</label></div>
+                                        <div class="col-sm-4 m-0 p-0">
+                                            <input type="date"class="form-control"name="dates">
+                                        </div>
+                                        <div class="col-sm-0 m-0 p-0"></div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                         </div>
+                           
+                         <div class="enter w-100 py-4 "><button type="submit" class="btn btn-info w-15">SUBMIT</button></div> 
+                         <!-- <button type="submit" class="btn btn-block text-uppercase text-shadow" data-dismiss="modal" id = 'modalSave'>SAVE</button>  -->
+                        </form>
+        
+                    </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+        
            <!----buyer details-->
 
-        <div class="form-popup modal " id="partyForm" style="background-color: #213b52" >
-            <form action="#"method="get" class="form-container1" >
-
-                <div class="m-0">
-                    <div class="row container-fluid p-2 m-0">
-                        <div class="col-sm-3 m-0 p-0"></div>  
-                        <div class="col-sm-6 m-0 p-0">
-                            <div class="row bg-info text-light p-2 m-0">
-                                <div class="col-md-6"><b>Party details</b></div>
-                                <div class="col-md-6">
-                                    {% for i in tally %}
-                                    {{i.name}}
-                                {% endfor %}
-                                </div>
-                            </div>
-                            
-                            <form class="p-3" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'save_buyer' %}" autocomplete="off">
-                                {% csrf_token %}
-                                <div class="p-3 text-white">
-                                    <div class="row container-fluid  p-2 m-0">
-                                        <div class="col-sm-2 m-0 p-0"></div>
-                                        <div class="col-sm-3 m-0 p-0"> <label for="a">Buyer (Bill to)</label></div>
-                                        <div class="col-sm-5 m-0 p-0"><input type="text"value="{{ p_name }}"  id="under"class="form-control" name="b_name"onclick="showform();" required></div>
-                                        
-                                    </div>
-                                    <div class="row container-fluid  p-2 m-0">
-                                        <div class="col-sm-2 m-0 p-0"></div>
-                                        <div class="col-sm-3 m-0 p-0"> <label for="b">Mailing Name</label></div>
-                                        <div class="col-sm-5 m-0 p-0"><input type="text"value="{{ p_name }}" id="Under"class="form-control" name="m_name"onclick="closeForm()"></div> 
-                                    </div>
-                                    <div class="row container-fluid  p-2 m-0">
-                                        <div class="col-sm-2 m-0 p-0"></div>
-                                        <div class="col-sm-3 m-0 p-0"> <label for="b">Address</label></div>
-                                        <div class="col-sm-5 m-0 p-0"> 
-                                            <input type="text"  name="address" class="form-control"onclick="closeForm()">
-                                        </div>
-                                    </div>
-                                    <div class="row container-fluid  p-2 m-0">
-                                      <div class="col-sm-2 m-0 p-0"></div>
-                                      <div class="col-sm-3 m-0 p-0"> <label>State</label></div>
-                                      <div class="col-sm-5 m-0 p-0">
-                                        <select name="state" id="" class="form-control">
-                                          <option value="0">Kerala</option>
-                                          <option value="0"></option>
-                                        </select>
-                                      </div> 
-                                  </div>
-                                  <div class="row container-fluid  p-2 m-0">
+           <div class="modal fade" id="trackForm">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content" style="background-color: #213b52; color:azure;">
+                    
+                    <div class="modal-body">
+                  
+                        <form class="p-3" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'save_buyer' %}" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="p-3">
+                                <div class="row container-fluid  p-2 m-0">
                                     <div class="col-sm-2 m-0 p-0"></div>
-                                    <div class="col-sm-3 m-0 p-0"> <label>Country</label></div>
-                                    <div class="col-sm-5 m-0 p-0">
-                                      <select name="country" id="" class="form-control">
-                                        <option value="0">India</option>
-                                        <option value="0"></option>
-                                      </select>
-                                    </div> 
+                                    <div class="col-sm-3 m-0 p-0"> <label for="a">Buyer (Bill to)</label></div>
+                                    <div class="col-sm-5 m-0 p-0"><input type="text"value="{{ p_name }}"  id="under"class="form-control" name="b_name"onclick="showform();" required></div>
+                                    
                                 </div>
-                                <div class="center w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
-                            </form>
+                                <div class="row container-fluid  p-2 m-0">
+                                    <div class="col-sm-2 m-0 p-0"></div>
+                                    <div class="col-sm-3 m-0 p-0"> <label for="b">Mailing Name</label></div>
+                                    <div class="col-sm-5 m-0 p-0"><input type="text"value="{{ p_name }}" id="Under"class="form-control" name="m_name"onclick="closeForm()"></div> 
+                                </div>
+                                <div class="row container-fluid  p-2 m-0">
+                                    <div class="col-sm-2 m-0 p-0"></div>
+                                    <div class="col-sm-3 m-0 p-0"> <label for="b">Address</label></div>
+                                    <div class="col-sm-5 m-0 p-0"> 
+                                        <input type="text"  name="address" class="form-control"onclick="closeForm()">
+                                    </div>
+                                </div>
+                                <div class="row container-fluid  p-2 m-0">
+                                  <div class="col-sm-2 m-0 p-0"></div>
+                                  <div class="col-sm-3 m-0 p-0"> <label>State</label></div>
+                                  <div class="col-sm-5 m-0 p-0">
+                                    <select name="state" id="" class="form-control">
+                                      <option value="0">Kerala</option>
+                                      <option value="0"></option>
+                                    </select>
+                                  </div> 
+                              </div>
+                              <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-2 m-0 p-0"></div>
+                                <div class="col-sm-3 m-0 p-0"> <label>Country</label></div>
+                                <div class="col-sm-5 m-0 p-0">
+                                  <select name="country" id="" class="form-control">
+                                    <option value="0">India</option>
+                                    <option value="0"></option>
+                                  </select>
+                                </div> 
+                            </div>
+                            <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                        </form>
+            
                         </div>
-                    <div class="col-sm-5 m-0 p-0"></div>
-                </div>  
-                
-            </form>
-            <button type="button" class="btn cancel close" onclick="closeForm()">x</button>
-        </div> 
+    
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
 {% if show_modal %}
 <script>
    $(document).ready(function(){
-    $('trackForm').modal('show');
+    $('#trackForm').modal('show');
    });
 </script>
 {% endif %}
