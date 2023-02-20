@@ -96,7 +96,7 @@
             position: fixed;
             border: 1px solid #f1f1f1;
             top: 140px;
-            z-index: 9;
+            
         }
         .content a:hover {
             background-color: rgb(238, 167, 75);
@@ -138,8 +138,9 @@
                   <tr  class="p-2">
                     <th colspan="8" style="border-bottom: solid 0.5px rgba(205, 196, 196, 0.2) ; border-right:none ;">
                       <div>
-                      <label style="font-weight:600 ;text-transform:capitalize; font-size: 18px;background-color: rgb(17, 54, 86);" 
-                      name = 'vouchtype' value = 'Credit Note'>&nbsp;&nbsp;&nbsp;&nbsp;Credit Note&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label style="font-weight:600 ;text-transform:capitalize; font-size: 18px;background-color: rgb(17, 54, 86);" 
+                        name = 'vouchtype' value = '{{name}}'>&nbsp;&nbsp;&nbsp;&nbsp;{{name}}&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                      
                       <input type="hidden" value="{{name}}" name="type">
                         <label style="font-weight: 400; color: #000;">No.</label>&nbsp;&nbsp;
@@ -173,7 +174,7 @@
                            
                             
                        
-                       <input type="text"value="{{ value }}"  id="payacc"class="form-control" name="acc"value=""onclick="ShowForm()" required> 
+                       <input type="text"value="{{ values }}"  id="payacc"class="form-control" name="id"value=""onclick="ShowForm()" required> 
                         
                         
                     </span>
@@ -362,9 +363,10 @@
 
         <!-----tracking details----->
 
+        {% if show_modal %}
 
-    <div class="modal fade" id="trackForm">
-        <div class="modal-dialog modal-xl">
+    <div class="modal fade" id="trackForm"tabindex="-1" role="dialog" aria-labelledby="trackFormlabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl"role="document">
             <div class="modal-content" style="background-color: #213b52; color:azure;">
                 
                 <div class="modal-body">
@@ -478,10 +480,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function(){
+         $('#trackForm').modal('show');
+        });
+     </script>
+     {% endif %}
         
            <!----buyer details-->
 
-           <div class="modal fade" id="trackForm">
+           {% if show_buymodal %}
+
+           <div class="modal fade" id="buyerForm">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content" style="background-color: #213b52; color:azure;">
                     
@@ -493,13 +504,13 @@
                                 <div class="row container-fluid  p-2 m-0">
                                     <div class="col-sm-2 m-0 p-0"></div>
                                     <div class="col-sm-3 m-0 p-0"> <label for="a">Buyer (Bill to)</label></div>
-                                    <div class="col-sm-5 m-0 p-0"><input type="text"value="{{ p_name }}"  id="under"class="form-control" name="b_name"onclick="showform();" required></div>
+                                    <div class="col-sm-5 m-0 p-0"><input type="text"value="{{ p_name }}"value="{{ name }}"  id="under"class="form-control" name="b_name"onclick="showpop();" required></div>
                                     
                                 </div>
                                 <div class="row container-fluid  p-2 m-0">
                                     <div class="col-sm-2 m-0 p-0"></div>
                                     <div class="col-sm-3 m-0 p-0"> <label for="b">Mailing Name</label></div>
-                                    <div class="col-sm-5 m-0 p-0"><input type="text"value="{{ p_name }}" id="Under"class="form-control" name="m_name"onclick="closeForm()"></div> 
+                                    <div class="col-sm-5 m-0 p-0"><input type="text"value="{{ p_name }}"value="{{ name }}" id="Under"class="form-control" name="m_name"onclick="closeForm()"></div> 
                                 </div>
                                 <div class="row container-fluid  p-2 m-0">
                                     <div class="col-sm-2 m-0 p-0"></div>
@@ -527,27 +538,100 @@
                                     <option value="0"></option>
                                   </select>
                                 </div> 
-                            </div>
-                            <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
-                        </form>
+                              </div>
+                              <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div> 
             
-                        </div>
+                            </div>
+                        </form>  
     
                     </div>
                 </div>
             </div>
         </div>
 
+        <script>
+            $(document).ready(function(){
+             $('#buyerForm').modal('show');
+            });
+         </script>
+         {% endif %}
 
 
-{% if show_modal %}
-<script>
-   $(document).ready(function(){
-    $('#trackForm').modal('show');
-   });
-</script>
-{% endif %}
+         <div class="form-popup short" id="popForm" style="background-color: #213b52" >
+            <form action="" class="form-container1" >
+                <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Ledger Accounts</h6>
+                <a href="{% url 'ledger_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">reate</a> 
+                <a href="{% url 'new_party_create' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">New Party</a>  
+                <hr>
+                <div>
+                    <table>
+                        <tr>
+                            {% for l in ledger_ls %}
+                                <option onclick="setvalue('{{l.name}}','{{l.id}}')" class="btns_prnt">&nbsp;&nbsp;{{l.name}}</option>
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+                <input type="text" name="underhidden" hidden value="{{l.id}}">
+            </form>
+            <button type="button" class="btn cancel close" onclick="closeForm()">x</button>
+        </div>
 
+        <script>
+            function closeForm() {
+                document.getElementById("popForm").style.display = "none";
+            }
+            function showpop(){
+                document.getElementById('popForm').style.display= "block";
+            }
+            function setPrimary(){
+                document.getElementById('under').value= 'Names';
+                document.getElementById('popForm').style.visibility= "block";
+            }
+            function setvalue(under,underId){
+                document.getElementById('under').value= under;
+                document.getElementById('popForm').style.visibility= "block";
+                document.getElementsByName('underhidden').value= underId;
+            }
+           
+        </script>
+
+
+
+         <!----new party create-->
+
+         {% if show_newmodal %}
+
+         <div class="modal fade" id="newForm">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content" style="background-color: #213b52; color:azure;">
+                    
+                    <div class="modal-body">
+                  
+                        <form id="" action="{% url 'new_party_create' %}" method="post" class="p-5" style="background-color:rgba(0,0,0,.4);">
+                            {% csrf_token %}
+                
+                            <div class=" container-fluid  p-2 m-0">                               
+                               
+                                <div class="col-md-12"><input type="text" class="form-control" id="a" placeholder="" name="new" autocomplete="off"></div>
+                            </div>
+                                             
+                        <div><input type="submit" style="margin-left: 43%;" value="create" class="btn btn-info"></div>
+                                   
+                    
+                        </form>           
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function(){
+             $('#newForm').modal('show');
+            });
+         </script>
+         {% endif %}
 
 
 <script>
@@ -607,17 +691,17 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     
-
+<!-- 
 <script>
     document.querySelector("#payacc").addEventListener('change', function(){
         window.location.assign('/party_create/' + this.value);
     });
     
-</script>
+</script> -->
 
 
 
-<script>
+<!-- <script>
     document.querySelector('#payacc').addEventListener('submit', function(event){
         event.preventDefault();
         let acc = document.querySelector(".acc").value;
@@ -626,7 +710,7 @@
         window.sessionStorage.setItem('acc', acc);
     });
     
-</script>
+</script> -->
      
 <script>
 

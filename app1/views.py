@@ -11774,6 +11774,20 @@ def receipt_pcur_balance_change(request):
 
 #-----arjun----credit note voucher-----
 
+def credit_voucher_type(request):
+    if 't_id' in request.session:
+        if request.session.has_key('t_id'):
+            t_id = request.session['t_id']
+        else:
+            return redirect('/')
+
+        voucher = Voucher.objects.filter(voucher_type = 'Credit_Note')
+        context = {
+                    'voucher': voucher,
+
+                    }
+        return render(request,'credit_type.html',context)
+
 def credit_note_voucher_page(request):
 
     if 't_id' in request.session:
@@ -11784,7 +11798,13 @@ def credit_note_voucher_page(request):
 
         comp = Companies.objects.get(id = t_id)
 
+        name = request.POST.get('ctype')
+
+        vouch = Voucher.objects.filter(voucher_type = 'Credit_Note').get(voucher_name = name)
+
         item_list = stock_itemcreation.objects.all() 
+
+        ledger_ls = tally_ledger.objects.filter(Q(under = 'Branch_Divisions')|Q(under = 'Sundry_Creditors')|Q(under = 'sundry_Debtors'))
             
         ledg_grp = tally_ledger.objects.filter(Q(under = 'Bank_Accounts')|Q(under = 'Cash_in_Hand')|Q(under = 'Branch_Divisions')|Q(under = 'Sundry_Creditors')|Q(under = 'sundry_Debtors'))
      
@@ -11794,8 +11814,11 @@ def credit_note_voucher_page(request):
 
         context = {
                     'company' : comp ,
+                    'vouch':vouch,
                     'list':item_list,
                     'date1' : date.today(),
+                    'name':name,
+                    'ledger_ls':ledger_ls,
                     'ledg' : ledg_grp,
                     'v' : counter,
                 }
@@ -12020,12 +12043,11 @@ def save_receipt_details(request):
                               )
         party.save()
         print("success")
-        return redirect('credit_party_list', p_name)
-    else:
-        return redirect('party_create')
+
+    return render(request,'credit_voucher.html',{'p_name':p_name, 'show_buymodal':True})
 
 
-def credit_party_list(request, p_name):
+def credit_party_list(request):
     if 't_id' in request.session:
         if request.session.has_key('t_id'):
             t_id = request.session['t_id']
@@ -12038,7 +12060,6 @@ def credit_party_list(request, p_name):
             'tally':tally,
             'ledg_grp':ledg_grp,
             'acc':acc,
-            'p_name':p_name,
         }
     return render(request,'credit_party.html',context)
 
@@ -12059,11 +12080,11 @@ def save_buyer(request):
                               contr=c_ountr,
                               )
         data.save()
-        
-        #return redirect('credit_note_voucher', value)
-        return HttpResponseRedirect(reverse("credit_note_voucher", value))
-    else:
-        return redirect('/')
+
+    return render(request,'credit_voucher.html',{'values':value})   
+    #     return HttpResponseRedirect("credit_note_voucher_page", {'value':value})
+    # else:
+    #     return redirect('/')
 
 
 def voucher_page(request):
@@ -12076,19 +12097,12 @@ def voucher_page(request):
         data=Voucher.objects.all()
     return render(request,'credit_voucher_type.html',{'tally':tally,'data':data})
 
-def new_party_create(request):
-    if 't_id' in request.session:
-        if request.session.has_key('t_id'):
-            t_id = request.session['t_id']
-        else:
-            return redirect('/')
-        tally = Companies.objects.filter(id=t_id)
-        if request.method=='POST':
+def new_party_create(request):   
+    if request.method=='POST':
             name=request.POST.get('new')
             buyer = new_buyer(new=name)
             buyer.save()
-            return redirect('credit_party_list')
-    return render(request,'credit_new_party.html',{'tally':tally})
+    return render(request,'credit_voucher.html',{'name':name, 'show_newmodal':True})
 
 def allocation_page(request, value):
     if 't_id' in request.session:
