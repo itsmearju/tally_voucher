@@ -165,16 +165,15 @@
 
                         
                            
-                            <!-- <select id="payacc"  name="acc"  class="mb-4 form-control" style="width: 0;"onclick="closeForm()">
+                        <!-- <select id="payacc"  name="acc"  class="mb-4 form-control" style="width: 0;"onclick="closeForm()">
                                 <option id = "opt">&nbsp;&nbsp;List of Ledger Accounts </option> 
                                 {% for i in ledg %}
                                 <option id = "opt" name ='opt' value="{{i.id}}" >&nbsp;&nbsp;{{i.name}}</option> 
                                 {% endfor %}
-                            </select>  -->
-                           
-                            
+                        </select>  -->
+
                        
-                       <input type="text"value="{{ values }}"  id="payacc"class="form-control" name="id"value=""onclick="ShowForm()" required> 
+                       <input type="text"value="{{ values }}"  id="payacc"class="form-control" name="acc"value=""onclick="ShowForm()" required> 
                         
                         
                     </span>
@@ -590,7 +589,7 @@
             }
             function setvalue(under,underId){
                 document.getElementById('under').value= under;
-                document.getElementById('popForm').style.visibility= "block";
+                document.getElementById('popForm').style.display= "none";
                 document.getElementsByName('underhidden').value= underId;
             }
            

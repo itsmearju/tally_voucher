@@ -12152,7 +12152,7 @@ def save_bill(request):
         detail = bill_details()
 
         name = request.POST['name']
-        cr = request.POST['upto']
+        cr = request.POST['upto'] 
         option = request.POST['select']
         b_name = request.POST['b_name']
         due = request.POST['due']
@@ -12197,20 +12197,6 @@ def fetch_party(request):
     name = request.GET.get('name')
     if name:
          return render(request,'credit_voucher.html',{'name':name, 'show_modal':True})
-    
 
 
-# def credit_note_voucher_home(request, bill):
-#     if 't_id' in request.session:
-#         if request.session.has_key('t_id'):
-#             t_id = request.session['t_id']
-#         else:
-#             return redirect('/')
-#         tally = Companies.objects.filter(id=t_id)
-#         context = {
-#             'tally':tally,
-#             'bill':bill,
-#         }
-
-#     return render(request,'credit_voucher.html',context)
 
